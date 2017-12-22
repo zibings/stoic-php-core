@@ -1,0 +1,23 @@
+﻿{
+	"name": "stoic/stoic",
+	"description": "Stoic framework Core component",
+	"version": "1.0.0",
+	"homepage": "https://stoic-framework.com",
+	"autoload": {
+		"psr-0": {
+			"Stoic\\Chain\\": "./Chain"
+		},
+		"psr-4": {
+			"Stoic\\Chain\\": "./Chain"
+		},
+		"exclude-from-classmap": [
+			"/Tests/"
+		]
+	},
+	"require": {
+		"php": "^5.6 || ^7.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^5.7"
+	}
+}
