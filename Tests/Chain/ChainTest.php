@@ -32,7 +32,8 @@
 			}
 
 			$results = $dispatch->getResults();
-			$number  = $dispatch->increment($results[count($results) - 1]['number']);
+			$increment = ($results !== null) ? $results[count($results) - 1]['number'] : 0;
+			$number  = $dispatch->increment($increment);
 			$dispatch->setResult([
 				'number' => $number,
 			]);
