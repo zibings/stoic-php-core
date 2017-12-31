@@ -172,7 +172,7 @@ class ChattyNode extends IncrementerNode {
     }
 
     public function process($sender, DispatchBase &$dispatch) {
-        if (!($dispatch instanceof IncrementerDispatch)) {
+        if (!($dispatch instanceof IncrementDispatch)) {
             return;
         }
 
@@ -180,7 +180,7 @@ class ChattyNode extends IncrementerNode {
         parent::process($sender, $dispatch);
 
         // Echo the current counter value after incrementing
-        echo($dispatch->getCounterValue());
+        echo($dispatch->getCounterValue() . " ");
 
         return;
     }
@@ -188,3 +188,40 @@ class ChattyNode extends IncrementerNode {
 ```
 
 ### Chain Examples
+```php
+use Stoic\Chain\ChainHelper;
+
+// A plain IncrementDispatch
+$rawDispatch = new IncrementDispatch();
+$rawDispatch->initialize(null);
+
+// An IncrementDispatch that starts at 10
+$offsetDispatch = new IncrementDispatch();
+$offsetDispatch->initialize(10);
+
+// First chain to execute a few chatty nodes and continue
+$simpleChain = new ChainHelper();
+$simpleChain->linkNode(new ChattyNode());
+$simpleChain->linkNode(new ChattyNode());
+$simpleChain->linkNode(new ChattyNode());
+
+// Traverse plain dispatch in loop
+for ($i = 0; $i < 3; ++$i) {
+    $simpleChain->traverse($rawDispatch);
+}
+
+// Should output:
+// 1 2 3 4 5 6 7 8 9
+
+// Second chain to execute chatty nodes and a consumer
+$stopChain = new ChainHelper();
+$stopChain->linkNode(new ChattyNode());
+$stopChain->linkNode(new ChattyNode());
+$stopChain->linkNode(new ConsumerNode());
+$stopChain->linkNode(new ChattyNode());
+
+$stopChain->traverse($offsetDispatch);
+
+// Should output:
+// 11 12
+```
