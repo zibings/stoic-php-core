@@ -47,19 +47,19 @@ properties and methods defined in `DispatchBase`:
 - [protected:boolean] `$_isValid` -> Whether or not the dispatch is valid for processing
 
 #### Methods
-- [public] `consume()` Marks dispatch as having been consumed
-- [public] `getCalledDateTime()` Returns time dispatch was marked valid
-- [public] `getResults()` Returns any results stored in dispatch
-- [abstract public] `initialize($input)` Abstract method for handling initialization
-- [public] `isConsumable()` Returns whether or not dispatch can be consumed
-- [public] `isConsumed()` Returns whether or not dispatch has been consumed
-- [public] `isStateful()` Returns whether or not dispatch is stateful
-- [public] `isValid()` Returns whether or not dispatch is marked as valid
-- [protected] `makeConsumable()` Sets dispatch as consumable
-- [protected] `makeStateful()` Sets dispatch as stateful
-- [protected] `makeValid()` Sets dispatch as valid
-- [public] `numResults()` Returns number of results stored in dispatch
-- [public] `setResult($result)` Sets a result in dispatch, overwrites any existing result if dispatch not stateful
+- [public] `consume()` -> Marks dispatch as having been consumed
+- [public] `getCalledDateTime()` -> Returns time dispatch was marked valid
+- [public] `getResults()` -> Returns any results stored in dispatch
+- [abstract public] `initialize($input)` -> Abstract method for handling initialization
+- [public] `isConsumable()` -> Returns whether or not dispatch can be consumed
+- [public] `isConsumed()` -> Returns whether or not dispatch has been consumed
+- [public] `isStateful()` -> Returns whether or not dispatch is stateful
+- [public] `isValid()` -> Returns whether or not dispatch is marked as valid
+- [protected] `makeConsumable()` -> Sets dispatch as consumable
+- [protected] `makeStateful()` -> Sets dispatch as stateful
+- [protected] `makeValid()` -> Sets dispatch as valid
+- [public] `numResults()` -> Returns number of results stored in dispatch
+- [public] `setResult($result)` -> Sets a result in dispatch, overwrites any existing result if dispatch not stateful
 
 ### Examples
 For examples, please see the 'Dispatch' section of the [Examples](examples.md) page.

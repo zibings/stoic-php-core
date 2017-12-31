@@ -74,7 +74,7 @@
 		 * @param string $key Value to use for node key.
 		 * @return NodeBase
 		 */
-		public function setKey($key) {
+		protected function setKey($key) {
 			$this->_key = $key;
 
 			return $this;
@@ -86,7 +86,7 @@
 		 * @param string $version Value to use for node version.
 		 * @return NodeBase
 		 */
-		public function setVersion($version) {
+		protected function setVersion($version) {
 			$this->_version = $version;
 
 			return $this;

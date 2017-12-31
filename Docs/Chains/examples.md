@@ -1,6 +1,12 @@
 ## Examples
 - [Dispatch Examples](#dispatch-examples)
+  - [Consumable Dispatch](#consumable-dispatch)
+  - [Stateful Dispatch](#stateful-dispatch)
+  - [An Increment Dispatch](#an-increment-dispatch)
 - [Node Examples](#node-examples)
+  - [Incrementer Node](#an-incrementer-node)
+  - [Consumer Node](#a-consumer-node)
+  - [Chatty Node](#a-chatty-node)
 - [Chain Examples](#chain-examples)
 
 ### Dispatch Examples
@@ -77,6 +83,11 @@ class IncrementDispatch extends DispatchBase {
         return;
     }
 
+    // So we can see what our counter is at currently
+    public function getCounterValue() {
+        return $this->counter;
+    }
+
     // A public method to let a node trigger incrementing the counter
     public function incrementCount() {
         $this->counter++;
@@ -87,5 +98,93 @@ class IncrementDispatch extends DispatchBase {
 ```
 
 ### Node Examples
+The following nodes will be used for examples later on.
+
+#### An Incrementer Node
+```php
+use Stoic\Chain\DispatchBase;
+use Stoic\Chain\NodeBase;
+
+// A node that only calls an increment method on the dispatch
+class IncrementerNode extends NodeBase {
+    // Need to instantiate with key/version info to be valid
+    public function __construct() {
+        $this->setKey('incrementerNode');
+        $this->setVersion('0.0.1');
+
+        return;
+    }
+
+    // Implement this to actually perform processing in a chain
+    public function process($sender, DispatchBase &$dispatch) {
+        if (!($dispatch instanceof IncrementDispatch)) {
+            return;
+        }
+
+        // Now we're sure it's the dispatch we want, so increment
+        // and simply return so the next node in the chain can do
+        // its job
+        $dispatch->incrementCount();
+
+        return;
+    }
+}
+```
+
+#### A Consumer Node
+```php
+use Stoic\Chain\DispatchBase;
+use Stoic\Chain\NodeBase;
+
+// A node that simply attempts to consume a dispatch
+class ConsumerNode extends NodeBase {
+    // Need to instantiate with key/version info to be valid
+    public function __construct() {
+        $this->setKey('consumerNode');
+        $this->setVersion('0.0.1');
+
+        return;
+    }
+
+    // Implement this to actually perform processing in a chain
+    public function process($sender, DispatchBase &$dispatch) {
+        // Since we don't care what kind of dispatch (all should
+        // have the consume method), just consume and return
+        $dispatch->consume();
+
+        return;
+    }
+}
+```
+
+#### A Chatty Node
+```php
+use Stoic\Chain\DispatchBase;
+use Stoic\Chain\NodeBase;
+
+// An IncrementerNode that yells out what it's doing
+class ChattyNode extends IncrementerNode {
+    public function __construct() {
+        $this->setKey('chattyNode');
+        $this->setVersion('0.0.1');
+
+        return;
+    }
+
+    public function process($sender, DispatchBase &$dispatch) {
+        if (!($dispatch instanceof IncrementerDispatch)) {
+            return;
+        }
+
+        // Call the IncrementerNode process so it does its job
+        parent::process($sender, $dispatch);
+
+        // Echo the current counter value after incrementing
+        echo($dispatch->getCounterValue());
+
+        return;
+    }
+}
+```
 
 ### Chain Examples
