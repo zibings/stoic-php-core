@@ -18,7 +18,7 @@
 		 */
 		protected $_isConsumable = false;
 		/**
-		 * Whether or not the dispatch should retain state.
+		 * Whether or not the dispatch should retain results.
 		 * 
 		 * @var boolean
 		 */
@@ -154,7 +154,7 @@
 		 * 
 		 * @return DispatchBase
 		 */
-		public function makeConsumable() {
+		protected function makeConsumable() {
 			$this->_isConsumable = true;
 
 			return $this;
@@ -165,7 +165,7 @@
 		 * 
 		 * @return DispatchBase
 		 */
-		public function makeStateful() {
+		protected function makeStateful() {
 			$this->_isStateful = true;
 
 			return $this;
