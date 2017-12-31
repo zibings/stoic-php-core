@@ -20,6 +20,14 @@
 		}
 	}
 
+	class StatefulIncrementDispatch extends IncrementDispatch {
+		public function initialize($input = []) {
+			$this->makeValid();
+			$this->makeConsumable();
+			$this->makeStateful();
+		}
+	}
+
 	class IncrementNode extends NodeBase {
 		public function __construct() {
 			$this->_key     = 'IncrementNode';
@@ -87,8 +95,7 @@
 			$chainHelper = new ChainHelper();
 			$chainHelper->linkNode(new IncrementNode())->linkNode(new IncrementNode())->linkNode(new IncrementNode());
 
-			$dispatch = new IncrementDispatch();
-			$dispatch->makeStateful();
+			$dispatch = new StatefulIncrementDispatch();
 			$dispatch->initialize();
 
 			$chainHelper->traverse($dispatch);
