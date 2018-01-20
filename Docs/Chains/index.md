@@ -71,4 +71,5 @@ To find out more about the system, check out the following pages:
 
 * [Dispatches](dispatches.md)
 * [Nodes](nodes.md)
+* [ChainHelper](chainhelper.md)
 * [All Examples](examples.md)
