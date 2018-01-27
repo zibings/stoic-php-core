@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
+        bootstrap="vendor/autoload.php"
+        colors="true">
+	<php>
+		<ini name="error_reporting" value="-1" />
+	</php>
+
+	<testsuites>
+		<testsuite name="Stoic Chain Tests">
+			<directory suffix="Test.php">./Tests/Chain/</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
