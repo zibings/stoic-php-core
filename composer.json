@@ -5,10 +5,12 @@
 	"homepage": "https://stoic-framework.com",
 	"autoload": {
 		"psr-0": {
-			"Stoic\\Chain\\": "./Chain"
+			"Stoic\\Chain\\": "./Chain",
+			"Stoic\\Utilities\\":  "./Utilities"
 		},
 		"psr-4": {
-			"Stoic\\Chain\\": "./Chain"
+			"Stoic\\Chain\\": "./Chain",
+			"Stoic\\Utilities\\":  "./Utilities"
 		},
 		"exclude-from-classmap": [
 			"/Tests/"
