@@ -70,10 +70,12 @@
 			$isChainSuccessful = $chainHelper->traverse($dispatch);
 			$results           = $dispatch->getResults();
 
-			$this->assertTrue($isChainSuccessful);
-			$this->assertCount(1, $results);
-			$this->assertCount(3, $chainHelper->getNodeList());
-			$this->assertEquals(3, isset($results[0]['number']) ? $results[0]['number'] : 0);
+			self::assertTrue($isChainSuccessful);
+			self::assertCount(1, $results);
+			self::assertCount(3, $chainHelper->getNodeList());
+			self::assertEquals(3, isset($results[0]['number']) ? $results[0]['number'] : 0);
+
+			return;
 		}
 
 		public function test_dispatchCanBeConsumed() {
@@ -86,9 +88,11 @@
 			$chainHelper->traverse($dispatch);
 			$results = $dispatch->getResults();
 
-			$this->assertTrue($dispatch->isConsumable());
-			$this->assertTrue($dispatch->isConsumed());
-			$this->assertEquals(1, isset($results[0]['number']) ? $results[0]['number'] : 0);
+			self::assertTrue($dispatch->isConsumable());
+			self::assertTrue($dispatch->isConsumed());
+			self::assertEquals(1, isset($results[0]['number']) ? $results[0]['number'] : 0);
+
+			return;
 		}
 
 		public function test_dispatchHoldsStates() {
@@ -101,9 +105,11 @@
 			$chainHelper->traverse($dispatch);
 			$results = $dispatch->getResults();
 
-			$this->assertCount(3, $results);
-			$this->assertEquals(1, isset($results[0]['number']) ? $results[0]['number'] : 0);
-			$this->assertEquals(2, isset($results[1]['number']) ? $results[1]['number'] : 0);
-			$this->assertEquals(3, isset($results[2]['number']) ? $results[2]['number'] : 0);
+			self::assertCount(3, $results);
+			self::assertEquals(1, isset($results[0]['number']) ? $results[0]['number'] : 0);
+			self::assertEquals(2, isset($results[1]['number']) ? $results[1]['number'] : 0);
+			self::assertEquals(3, isset($results[2]['number']) ? $results[2]['number'] : 0);
+
+			return;
 		}
 	}
