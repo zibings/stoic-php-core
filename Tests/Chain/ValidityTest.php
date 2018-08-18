@@ -39,7 +39,9 @@
 			$chainHelper = new ChainHelper();
 			$chainHelper->linkNode(new InvalidNode())->linkNode(new ValidNode());
 
-			$this->assertCount(1, $chainHelper->getNodeList());
+			self::assertCount(1, $chainHelper->getNodeList());
+
+			return;
 		}
 
 		public function test_invalidDispatchFails() {
@@ -49,7 +51,9 @@
 			$dispatch      = new InvalidDispatch();
 			$shouldBeFalse = $chainHelper->traverse($dispatch);
 
-			$this->assertFalse($shouldBeFalse);
+			self::assertFalse($shouldBeFalse);
+
+			return;
 		}
 
 		public function test_validDispatchAndValidNodePasses() {
@@ -61,6 +65,8 @@
 
 			$shouldBeTrue = $chainHelper->traverse($dispatch);
 
-			$this->assertTrue($shouldBeTrue);
+			self::assertTrue($shouldBeTrue);
+
+			return;
 		}
 	}

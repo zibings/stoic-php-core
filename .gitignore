@@ -258,3 +258,4 @@ paket-files/
 # Composer files
 composer.lock
 vendor/
+*.tmppica

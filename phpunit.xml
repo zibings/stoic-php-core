@@ -13,5 +13,8 @@
 		<testsuite name="Stoic Chain Tests">
 			<directory suffix="Test.php">./Tests/Chain/</directory>
 		</testsuite>
+		<testsuite name="Stoic Utility Tests">
+			<directory suffix="Test.php">./Tests/Utilities/</directory>
+		</testsuite>
 	</testsuites>
 </phpunit>

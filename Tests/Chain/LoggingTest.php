@@ -70,10 +70,10 @@
 			$ch_norm = new ChainHelper();
 			$ch_consume = new ChainHelper(false, true);
 
-			$this->assertTrue($ch_nonevent->hookLogger(array($lg_nonevent, "receiveLog")));
-			$this->assertTrue($ch_event->hookLogger(array($lg_event, "receiveLog")));
-			$this->assertTrue($ch_norm->hookLogger(array($lg_norm, "receiveLog")));
-			$this->assertTrue($ch_consume->hookLogger(array($lg_consume, "receiveLog")));
+			self::assertTrue($ch_nonevent->hookLogger(array($lg_nonevent, "receiveLog")));
+			self::assertTrue($ch_event->hookLogger(array($lg_event, "receiveLog")));
+			self::assertTrue($ch_norm->hookLogger(array($lg_norm, "receiveLog")));
+			self::assertTrue($ch_consume->hookLogger(array($lg_consume, "receiveLog")));
 
 			$ch_nonevent->linkNode(new NonConsumeTestNode());
 			$ch_nonevent->linkNode(new ConsumeTestNode());
@@ -98,10 +98,10 @@
 			$ch_norm->traverse($disp);
 			$ch_consume->traverse($cdisp);
 
-			$this->assertEquals(4, count($lg_nonevent->_messages));
-			$this->assertEquals(3, count($lg_event->_messages));
-			$this->assertEquals(0, count($lg_norm->_messages));
-			$this->assertEquals(4, count($lg_consume->_messages));
+			self::assertEquals(4, count($lg_nonevent->_messages));
+			self::assertEquals(3, count($lg_event->_messages));
+			self::assertEquals(0, count($lg_norm->_messages));
+			self::assertEquals(4, count($lg_consume->_messages));
 
 			return;
 		}
