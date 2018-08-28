@@ -6,10 +6,12 @@
 	"autoload": {
 		"psr-0": {
 			"Stoic\\Chain\\": "./Chain",
+			"Stoic\\Log\\":  "./Log",
 			"Stoic\\Utilities\\":  "./Utilities"
 		},
 		"psr-4": {
 			"Stoic\\Chain\\": "./Chain",
+			"Stoic\\Log\\": "./Log",
 			"Stoic\\Utilities\\":  "./Utilities"
 		},
 		"exclude-from-classmap": [
@@ -17,9 +19,13 @@
 		]
 	},
 	"require": {
-		"php": "^5.6 || ^7.0"
+		"php": "^5.6 || ^7.0",
+		"psr/log": "^1.0.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^5.7"
+	},
+	"provide": {
+		"psr/log-implementation": "1.0.0"
 	}
 }
