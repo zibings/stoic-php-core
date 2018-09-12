@@ -259,3 +259,4 @@ paket-files/
 composer.lock
 vendor/
 *.tmppica
+/test.php
