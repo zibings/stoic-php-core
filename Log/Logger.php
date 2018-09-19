@@ -111,7 +111,8 @@
 
 				if ($val === null) {
 					$replacements[$rkey] = 'null';
-				} else if (is_scalar($val) || (is_object($val) && method_exists($val, '__toString'))) {
+				} else if (is_scalar($val) || (is_object($val) && method_exists($val, '__toString')
+						&& !($val instanceof \Exception) && !($val instanceof \DateTimeInterface))) {
 					$replacements[$rkey] = $val;
 				} else if (is_object($val)) {
 					if ($val instanceof \Exception) {
