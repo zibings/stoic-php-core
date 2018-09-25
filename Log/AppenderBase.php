@@ -2,7 +2,6 @@
 
 	namespace Stoic\Log;
 
-	use Stoic\Chain\DispatchBase;
 	use Stoic\Chain\NodeBase;
 
 	/**

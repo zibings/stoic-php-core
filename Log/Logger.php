@@ -59,11 +59,19 @@
 		 * array that don't implement LogAppenderBase
 		 * are simply ignored.
 		 * 
+		 * @param null|string $minimumLevel Optional minimum log level for output; Default is LogLevel::DEBUG
 		 * @param null|AppenderBase[] $appenders Optional collection of LogAppenderBase objects to assign.
 		 */
-		public function __construct($minimumLevel = LogLevel::DEBUG, array $appenders = null) {
-			$this->minLevel = $minimumLevel;
+		public function __construct($minimumLevel = null, array $appenders = null) {
 			$this->appenders = new ChainHelper();
+
+			if ($minimumLevel !== null) {
+				if (in_array($minimumLevel, static::$levels) === false) {
+					throw new \InvalidArgumentException("Invalid log level supplied to Logger constructor");
+				}
+
+				$this->minLevel = $minimumLevel;
+			}
 
 			if ($appenders !== null && count($appenders) > 0) {
 				foreach (array_values($appenders) as $appdr) {
@@ -177,6 +185,8 @@
 
 			$disp = new MessageDispatch();
 			$disp->initialize($messages);
+			$this->messages = array();
+
 			$this->appenders->traverse($disp, $this);
 
 			return;
