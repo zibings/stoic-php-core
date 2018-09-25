@@ -12,8 +12,6 @@ to your systems.  For information on PSR-3 logging, please refer for the [PHP FI
 A fully-functional (and very simplistic) example of a new appender:
 
 ```php
-<?php
-
     use Stoic\Chain\DispatchBase;
     use Stoic\Log\AppenderBase;
     use Stoic\Log\Logger;
