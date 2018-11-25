@@ -45,7 +45,7 @@
 		}
 
 		public function test_invalidDispatchFails() {
-			$chainHelper = new ChainHelper();
+			$chainHelper = new ChainHelper(false, true);
 			$chainHelper->linkNode(new ValidNode());
 
 			$dispatch      = new InvalidDispatch();

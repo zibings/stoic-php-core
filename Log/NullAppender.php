@@ -17,6 +17,7 @@
 		 * 
 		 * @param mixed $sender Sender data, optional and thus can be 'null'.
 		 * @param DispatchBase $dispatch Collection of Message objects to handle.
+		 * @codeCoverageIgnore
 		 */
 		public function process($sender, DispatchBase &$dispatch) {
 			return;
