@@ -15,7 +15,7 @@
 		 *
 		 * @var array
 		 */
-		private static $constCache = [];
+		protected static $constCache = [];
 		
 
 		/**
@@ -23,20 +23,20 @@
 		 *
 		 * @var null|string
 		 */
-		private $name = null;
+		protected $name = null;
 		/**
 		 * Internal storage for value.
 		 *
 		 * @var null|integer
 		 */
-		private $value = null;
+		protected $value = null;
 		/**
 		 * Determines whether or not to serialize as the
 		 * name of the set value.
 		 *
 		 * @var boolean
 		 */
-		private $serializeAsName = true;
+		protected $serializeAsName = true;
 
 
 		/**
@@ -97,9 +97,8 @@
 		 */
 		public static function validName($name) {
 			$consts = static::getConstList();
-			$lowered = \mb_strtolower($name);
 
-			return array_key_exists($lowered, $consts['name']) !== false;
+			return array_key_exists($name, $consts['name']) !== false;
 		}
 
 		/**
