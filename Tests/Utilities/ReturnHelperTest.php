@@ -22,6 +22,13 @@
 			self::assertTrue($ret->hasMessages(), "ReturnHelper notes presence of messages correctly");
 			self::assertArraySubset(array("Testing", "Testing2", "Testing3"), $ret->getMessages(), true, "ReturnHelper returns the correct messages");
 
+			try {
+				$ret->addMessages([]);
+				self::assertTrue(false);
+			} catch (\InvalidArgumentException $ex) {
+				self::assertEquals("Messages array to ReturnHelper::addMessages() must be array with elements", $ex->getMessage());
+			}
+
 			return;
 		}
 
@@ -40,6 +47,13 @@
 			self::assertEquals(3, count($ret->getResults()), "ReturnHelper returns the correct number of results");
 			self::assertTrue($ret->hasResults(), "ReturnHelper notes presence of results correctly");
 			self::assertArraySubset(array("Testing", "Testing2", "Testing3"), $ret->getResults(), true, "ReturnHelper returns the correct results");
+
+			try {
+				$ret->addResults([]);
+				self::assertTrue(false);
+			} catch (\InvalidArgumentException $ex) {
+				self::assertEquals("Results array to ReturnHelper::addResults() must be array with elements", $ex->getMessage());
+			}
 
 			return;
 		}

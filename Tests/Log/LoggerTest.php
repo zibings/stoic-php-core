@@ -6,6 +6,9 @@
 	use Stoic\Chain\DispatchBase;
 	use Stoic\Log\AppenderBase;
 	use Stoic\Log\Logger;
+	use Stoic\Log\Message;
+	use Stoic\Log\MessageDispatch;
+	use Stoic\Log\NullAppender;
 
 	class MemoryAppender extends AppenderBase {
 		public $messages = array();
@@ -38,6 +41,13 @@
 
 	class LoggerTest extends TestCase {
 		public function test_LogLevels() {
+			try {
+				$msg = new Message('nonexistent-level', 'testing');
+				self::assertTrue(false);
+			} catch (\Psr\Log\InvalidArgumentException $ex) {
+				self::assertEquals("Invalid log level provided to Stoic\Log\LogMessage: nonexistent-level", $ex->getMessage());
+			}
+
 			$app = new MemoryAppender();
 			$log = new Logger(\Psr\Log\LogLevel::DEBUG, array($app));
 			
@@ -91,6 +101,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
+			self::assertEquals(3, count($app->messages[0]->__toArray()));
 			self::assertEquals("{ \"level\": \"EMERGENCY\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'EMERGENCY', 'Testing'), $app->messages[0]->__toString());
 
@@ -155,7 +166,9 @@
 
 		public function test_LogInterpolate() {
 			$app = new MemoryAppender();
-			$log = new Logger(\Psr\Log\LogLevel::DEBUG, array($app));
+			$log = new Logger(\Psr\Log\LogLevel::DEBUG);
+			$log->addAppender($app);
+			$log->output();
 
 			$log->info('Testing the way we {replace} strings.', array('replace' => 'REPLACE'));
 			$log->output();
@@ -198,19 +211,32 @@
 			return;
 		}
 
-		public function test_AddAppender() {
-			$log = new Logger();
-
-			self::expectException(\TypeError::class);
-			$log->addAppender(null);
-
-			return;
-		}
-
 		public function test_BadMinimumLevel() {
 			self::expectException(\InvalidArgumentException::class);
 			$log = new Logger('boom');
 			$log = new Logger(1);
+
+			return;
+		}
+
+		public function test_MessageDispatch() {
+			$msg = new Message(\Psr\Log\LogLevel::ALERT, 'Testing');
+
+			$disp = new MessageDispatch();
+			$disp->initialize('testing');
+			self::assertFalse($disp->isValid());
+
+			$disp = new MessageDispatch();
+			$disp->initialize([]);
+			self::assertFalse($disp->isValid());
+
+			$disp = new MessageDispatch();
+			$disp->initialize([$msg]);
+			self::assertTrue($disp->isValid());
+
+			$disp = new MessageDispatch();
+			$disp->initialize($msg);
+			self::assertTrue($disp->isValid());
 
 			return;
 		}

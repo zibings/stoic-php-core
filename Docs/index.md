@@ -11,4 +11,4 @@ Collection of PHP components crafted via years of a very pedantic approach to bu
   * [Chains](Chains/index.md)
   * [Logging](Logging/index.md)
   * [ReturnHelper](Utilities/return-helper.md)
-  * [EnumHelper](Utilities/enum-helper.md)
+  * [EnumBase](Utilities/enum-helper.md)

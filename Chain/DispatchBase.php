@@ -46,11 +46,13 @@
 		 * 
 		 * @var \DateTime
 		 */
-		private $_calledDateTime;
+		private $_calledDateTime = null;
 
 
 		public function __toString() {
-			return static::class . "{ \"calledDateTime\": \"" . $this->_calledDateTime->format("Y-m-d G:i:s") . "\", " .
+			$calledDateTime = ($this->_calledDateTime instanceof \DateTimeInterface) ? $this->_calledDateTime->format("Y-m-d G:i:s") : 'N/A';
+
+			return static::class . "{ \"calledDateTime\": \"" . $calledDateTime . "\", " .
 				"\"isConsumable\": \"{$this->_isConsumable}\", " .
 				"\"isStateful\": \"{$this->_isStateful}\", " .
 				"\"isConsumed\": \"{$this->_isConsumed}\" }";

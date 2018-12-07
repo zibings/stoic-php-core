@@ -91,10 +91,6 @@
 		 * @throws \Psr\Log\InvalidArgumentException Thrown if invalid appender argument provided.
 		 */
 		public function addAppender(AppenderBase $appender) {
-			if ($appender === null) {
-				throw new \Psr\Log\InvalidArgumentException("Appender provided for Stoic\Log\Logger::addAppender() was invalid");
-			}
-
 			$this->appenders->linkNode($appender);
 
 			return;
