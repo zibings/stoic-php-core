@@ -55,18 +55,18 @@
 		 * 
 		 * @param string $level String value of message level.
 		 * @param string $message String value of log message.
-		 * @throws InvalidArgumentException Thrown if invalid log level provided.
+		 * @throws \InvalidArgumentException Thrown if invalid log level provided.
 		 */
 		public function __construct($level, $message) {
 			if (array_key_exists($level, self::$validLevels) === false) {
-				throw new InvalidArgumentException("Invalid log level provided to Stoic\Log\LogMessage: {$level}");
+				throw new \InvalidArgumentException("Invalid log level provided to Stoic\Log\LogMessage: {$level}");
 			}
 
 			$this->level = $level;
 			$this->message = $message;
 
-			$timeParts = explode('.', microtime(true));
-			$this->timestamp = new \DateTimeImmutable(date('Y-m-d G:i:s.', $timeParts[0]) . $timeParts[1], new \DateTimeZone('UTC'));
+			$timeParts = gettimeofday();
+			$this->timestamp = new \DateTimeImmutable(date('Y-m-d G:i:s.', $timeParts['sec']) . $timeParts['usec'], new \DateTimeZone('UTC'));
 
 			return;
 		}
