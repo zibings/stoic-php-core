@@ -65,13 +65,8 @@
 			$this->level = $level;
 			$this->message = $message;
 
-			$timeParts = explode('.', microtime(true));
-
-			if (count($timeParts) != 2) {
-				$timeParts[1] = 0;
-			}
-
-			$this->timestamp = new \DateTimeImmutable(date('Y-m-d G:i:s.', $timeParts[0]) . $timeParts[1], new \DateTimeZone('UTC'));
+			$timeParts = gettimeofday();
+			$this->timestamp = new \DateTimeImmutable(date('Y-m-d G:i:s.', $timeParts['sec']) . $timeParts['usec'], new \DateTimeZone('UTC'));
 
 			return;
 		}
