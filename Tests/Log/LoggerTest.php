@@ -44,7 +44,7 @@
 			try {
 				$msg = new Message('nonexistent-level', 'testing');
 				self::assertTrue(false);
-			} catch (\Psr\Log\InvalidArgumentException $ex) {
+			} catch (\InvalidArgumentException $ex) {
 				self::assertEquals("Invalid log level provided to Stoic\Log\LogMessage: nonexistent-level", $ex->getMessage());
 			}
 
