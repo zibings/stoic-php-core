@@ -12,6 +12,18 @@
 	 */
 	class NullAppender extends AppenderBase {
 		/**
+		 * Instantiates a new NullAppender object.
+		 *
+		 * @codeCoverageIgnore
+		 */
+		public function __construct() {
+			$this->setKey('NullAppender');
+			$this->setVersion('1.0.0');
+
+			return;
+		}
+
+		/**
 		 * Append method which simply consumes the collection
 		 * of log messages and returns without caring.
 		 * 
