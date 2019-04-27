@@ -79,4 +79,15 @@
 
 			return;
 		}
+
+		public function test_IsIn() {
+			$enum = new AnotherEnum();
+			self::assertFalse($enum->isIn(1, 2));
+
+			$enum = new AnotherEnum(AnotherEnum::FIRST_VALUE);
+			self::assertTrue($enum->isIn(1));
+			self::assertFalse($enum->isIn(2));
+
+			return;
+		}
 	}

@@ -216,6 +216,27 @@
 		}
 
 		/**
+		 * Determines if the current value is equal to any of the
+		 * supplied values.
+		 *
+		 * @param integer[] $values Array of integer values to compare against current value.
+		 * @return boolean
+		 */
+		public function isIn(int ...$values) {
+			if ($this->value === null) {
+				return false;
+			}
+
+			foreach (array_values($values) as $val) {
+				if ($this->value === $val) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/**
 		 * Serializes Enum object to its string representation.
 		 *
 		 * @return string

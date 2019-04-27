@@ -51,4 +51,5 @@ implemented.
 - [public] `getName()` -> Retrieves the set name for the object
 - [public] `getValue()` -> Retrieves the set value for the object
 - [public] `is($value)` -> Determines if the set value for the object is the same as the supplied value
+- [public] `isIn(...$values)` -> Determines if the current value is equal to any of the supplied values
 - [public] `jsonSerialize()` -> Serializes the object to its string representation
