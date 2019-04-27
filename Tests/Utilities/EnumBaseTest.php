@@ -16,6 +16,10 @@
 		const FIRST_VALUE = 1;
 	}
 
+	class NotAnEnum {
+		const FIRST_VALUE = 1;
+	}
+
 	class EnumBaseTest extends TestCase {
 		public function test_Instantiation() {
 			$val = new AnEnum(AnEnum::FIRST_VALUE);
@@ -49,6 +53,29 @@
 
 			$val = new AnEnum(AnEnum::FIRST_VALUE, false);
 			self::assertEquals('"1"', json_encode($val));
+
+			return;
+		}
+
+		public function test_TryGetEnum() {
+			$enum = EnumBase::tryGetEnum(1, AnotherEnum::class);
+			self::assertTrue($enum->getValue() == 1);
+
+			$enum = EnumBase::tryGetEnum(new AnotherEnum(1), AnotherEnum::class);
+			self::assertTrue($enum->getValue() == 1);
+
+			$enum = EnumBase::tryGetEnum(35, AnotherEnum::class);
+			self::assertTrue($enum->getValue() === null);
+
+			$enum = EnumBase::tryGetEnum(null, AnotherEnum::class);
+			self::assertTrue($enum->getValue() === null);
+
+			try {
+				$enum = EnumBase::tryGetEnum(1, NotAnEnum::class);
+				self::assertTrue(false);
+			} catch (\InvalidArgumentException $ex) {
+				self::assertEquals("Cannot attempt to retrieve an enum from a class that doesn't extend EnumBase", $ex->getMessage());
+			}
 
 			return;
 		}
