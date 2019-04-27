@@ -126,6 +126,8 @@
 					} else {
 						$replacements[$rkey] = "[object " . get_class($val) . "]";
 					}
+				} else if (is_array($val)) {
+					$replacements[$rkey] = "[" . print_r($val, true) . "]";
 				} else {
 					$replacements[$rkey] = "[" . gettype($val) . "]";
 				}
