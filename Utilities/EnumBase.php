@@ -89,6 +89,39 @@
 		}
 
 		/**
+		 * Attempts to instantiate an EnumBase class based on the given
+		 * value.  If the value is already the requested class, it is
+		 * returned.  If the value is a valid value for the class, a new
+		 * instance of the class with the value assigned is returned.  In
+		 * all other cases a blank instance of the requested class is
+		 * returned.
+		 *
+		 * @param integer|object $value The value which may or may not be valid as an enum class/value.
+		 * @param string $className Fully qualified class name to return.
+		 * @throws \InvalidArgumentException
+		 * @return EnumBase
+		 */
+		public static function tryGetEnum($value, $className) {
+			if (!is_a($className, EnumBase::class, true)) {
+				throw new \InvalidArgumentException("Cannot attempt to retrieve an enum from a class that doesn't extend EnumBase");
+			}
+
+			if ($value === null) {
+				return new $className();
+			}
+
+			if (is_a($value, $className)) {
+				return $value;
+			}
+
+			if (!$className::validValue($value)) {
+				return new $className();
+			}
+
+			return new $className($value);
+		}
+
+		/**
 		 * Static method to validate a name against the Enum
 		 * object's possible constants.
 		 *
@@ -180,6 +213,27 @@
 			}
 
 			return true;
+		}
+
+		/**
+		 * Determines if the current value is equal to any of the
+		 * supplied values.
+		 *
+		 * @param integer[] $values Array of integer values to compare against current value.
+		 * @return boolean
+		 */
+		public function isIn(int ...$values) {
+			if ($this->value === null) {
+				return false;
+			}
+
+			foreach (array_values($values) as $val) {
+				if ($this->value === $val) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		/**

@@ -41,6 +41,7 @@ implemented.
 ### Static Methods
 - [public] `fromString($string, $serializeAsName)` -> Returns a new Enum object using the name instead of the value for initialization
 - [public] `getConstList()` -> Returns the const lookup for the called class
+- [public] `tryGetEnum($value, $className)` -> Returns an EnumBase object of the type `$className`, either using an existing instance given to `$value` or using a valid integer given to `$value`
 - [public] `validName($name)` -> Validates a name against the const lookup values for the called class
 - [public] `validValue($value)` -> Validates a value against the const lookup values for the called class
 
@@ -50,4 +51,5 @@ implemented.
 - [public] `getName()` -> Retrieves the set name for the object
 - [public] `getValue()` -> Retrieves the set value for the object
 - [public] `is($value)` -> Determines if the set value for the object is the same as the supplied value
+- [public] `isIn(...$values)` -> Determines if the current value is equal to any of the supplied values
 - [public] `jsonSerialize()` -> Serializes the object to its string representation

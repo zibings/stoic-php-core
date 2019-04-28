@@ -170,43 +170,57 @@
 			$log->addAppender($app);
 			$log->output();
 
-			$log->info('Testing the way we {replace} strings.', array('replace' => 'REPLACE'));
+			$log->info('Testing the way we {replace} strings.', ['replace' => 'REPLACE']);
 			$log->output();
 
 			self::assertEquals('Testing the way we REPLACE strings.', $app->messages[0]->message);
-			$app->messages = array();
+			$app->messages = [];
 
 			$ex = new \Exception('Testing');
-			$log->info('{exception}', array('exception' => $ex));
+			$log->info('{exception}', ['exception' => $ex]);
 			$log->output();
 
 			self::assertEquals("[exception Exception]\n\tMessage: Testing\n\tStack Trace: {$ex->getTraceAsString()}", $app->messages[0]->message);
-			$app->messages = array();
+			$app->messages = [];
 
-			$log->info('{obj}', array('obj' => new TestContextClassWithToString()));
+			$log->info('{obj}', ['obj' => new TestContextClassWithToString()]);
 			$log->output();
 
 			self::assertEquals("TestContextClass: 5", $app->messages[0]->message);
-			$app->messages = array();
+			$app->messages = [];
 
 			$now = new \DateTime('now', new \DateTimeZone('UTC'));
-			$log->info('{date}', array('date' => $now));
+			$log->info('{date}', ['date' => $now]);
 			$log->output();
 
 			self::assertEquals($now->format(\DateTime::RFC3339), $app->messages[0]->message);
-			$app->messages = array();
+			$app->messages = [];
 
-			$log->info('{obj}', array('obj' => new TestContextClassWithoutToString()));
+			$log->info('{obj}', ['obj' => new TestContextClassWithoutToString()]);
 			$log->output();
 
 			self::assertEquals('[object Stoic\Log\Tests\TestContextClassWithoutToString]', $app->messages[0]->message);
-			$app->messages = array();
+			$app->messages = [];
 
-			$log->info('{obj}', array('obj' => null));
+			$log->info('{obj}', ['obj' => null]);
 			$log->output();
 
 			self::assertEquals('null', $app->messages[0]->message);
-			$app->messages = array();
+			$app->messages = [];
+
+			$log->info('{arr}', ['arr' => ['test' => 'val']]);
+			$log->output();
+
+			self::assertEquals("[Array\n(\n    [test] => val\n)\n]", $app->messages[0]->message);
+			$app->messages = [];
+
+			$dh = opendir('./');
+			$log->info('{non-scalar}', ['non-scalar' => $dh]);
+			$log->output();
+			closedir($dh);
+
+			self::assertEquals('[resource]', $app->messages[0]->message);
+			$app->messages = [];
 
 			return;
 		}
