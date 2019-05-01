@@ -59,7 +59,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"ALERT\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"ALERT\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'ALERT', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -73,7 +73,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"CRITICAL\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"CRITICAL\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'CRITICAL', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -87,7 +87,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"DEBUG\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"DEBUG\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'DEBUG', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -102,7 +102,7 @@
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
 			self::assertEquals(3, count($app->messages[0]->__toArray()));
-			self::assertEquals("{ \"level\": \"EMERGENCY\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"EMERGENCY\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'EMERGENCY', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -116,7 +116,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"ERROR\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"ERROR\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'ERROR', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -130,7 +130,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"INFO\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"INFO\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'INFO', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -144,7 +144,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"NOTICE\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"NOTICE\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'NOTICE', 'Testing'), $app->messages[0]->__toString());
 
 			$app = new MemoryAppender();
@@ -158,7 +158,7 @@
 			self::assertEquals('Testing', $app->messages[0]->message);
 
 			$ts = $app->messages[0]->getTimestamp()->format('Y-m-d G:i:s.u');
-			self::assertEquals("{ \"level\": \"WARNING\", \"message\": \"Testing\", \"timestamp\": \"{$ts}\" }", $app->messages[0]->__toJson());
+			self::assertEquals("{\"level\":\"WARNING\",\"message\":\"Testing\",\"timestamp\":\"{$ts}\"}", $app->messages[0]->__toJson());
 			self::assertEquals(sprintf("%s %' -9s %s", $ts, 'WARNING', 'Testing'), $app->messages[0]->__toString());
 
 			return;
