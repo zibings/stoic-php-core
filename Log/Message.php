@@ -11,7 +11,7 @@
 	 * @package Stoic\Log
 	 * @version 1.0.0
 	 */
-	class Message {
+	class Message implements \JsonSerializable {
 		/**
 		 * String value of message level.
 		 * 
@@ -102,11 +102,21 @@
 		 * @return string
 		 */
 		public function __toJson() {
-			return sprintf("{ \"level\": \"%s\", \"message\": \"%s\", \"timestamp\": \"%s\" }",
-				strtoupper($this->level),
-				$this->message,
-				$this->timestamp->format('Y-m-d G:i:s.u')
-			);
+			return json_encode($this);
+		}
+
+		/**
+		 * Returns an array of the message data ready to run through
+		 * json_encode().
+		 *
+		 * @return string[]
+		 */
+		public function jsonSerialize() {
+			return [
+				'level' => strtoupper($this->level),
+				'message' => $this->message,
+				'timestamp' => $this->timestamp->format('Y-m-d G:i:s.u')
+			];
 		}
 
 		/**
