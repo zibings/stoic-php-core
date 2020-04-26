@@ -7,7 +7,7 @@
 	 * and send events to them.
 	 * 
 	 * @package Stoic\Chain
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	class ChainHelper {
 		/**

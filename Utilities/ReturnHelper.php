@@ -7,7 +7,7 @@
 	 * method/function returns.
 	 * 
 	 * @package Stoic\Utilities
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	class ReturnHelper {
 		/**

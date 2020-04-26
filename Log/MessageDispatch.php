@@ -9,7 +9,7 @@
 	 * will be passed to log appenders.
 	 * 
 	 * @package Stoic\Log
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	class MessageDispatch extends DispatchBase {
 		/**
