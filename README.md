@@ -5,7 +5,7 @@ Core component for the PHP Stoic Framework.  For more information, visit our web
 Typical composer installation is supported, simply run the following command:
 
 ```
-composer require stoic-php-core
+composer require stoic/stoic
 ```
 
 Alternatively, downloads are available via the releases page here on GitHub.
