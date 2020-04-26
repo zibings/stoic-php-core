@@ -25,7 +25,12 @@
 		protected $_version = null;
 
 
-		public function __toString() {
+		/**
+		 * Serializes object as a string.
+		 *
+		 * @return string
+		 */
+		public function __toString() : string {
 			return static::class . "{ \"key\": \"{$this->_key}\", \"version\": \"{$this->_version}\" }";
 		}
 
@@ -34,7 +39,7 @@
 		 * 
 		 * @return string
 		 */
-		public function getKey() {
+		public function getKey() : string {
 			return $this->_key;
 		}
 
@@ -43,7 +48,7 @@
 		 * 
 		 * @return string
 		 */
-		public function getVersion() {
+		public function getVersion() : string {
 			return $this->_version;
 		}
 
@@ -55,7 +60,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isValid() {
+		public function isValid() : bool {
 			return !empty($this->_key) && !empty($this->_version);
 		}
 
@@ -74,7 +79,7 @@
 		 * @param string $key Value to use for node key.
 		 * @return NodeBase
 		 */
-		protected function setKey($key) {
+		protected function setKey(string $key) : NodeBase {
 			$this->_key = $key;
 
 			return $this;
@@ -86,7 +91,7 @@
 		 * @param string $version Value to use for node version.
 		 * @return NodeBase
 		 */
-		protected function setVersion($version) {
+		protected function setVersion(string $version) : NodeBase {
 			$this->_version = $version;
 
 			return $this;

@@ -17,7 +17,7 @@
 		 * 
 		 * @var Message[]
 		 */
-		public $messages = array();
+		public $messages = [];
 
 
 		/**
@@ -25,7 +25,7 @@
 		 * 
 		 * @param Message[] $messages Collection of Message objects to handle.
 		 */
-		public function initialize($input) {
+		public function initialize($input) : void {
 			if (!is_array($input) && (!is_object($input) || !($input instanceof Message))) {
 				return;
 			}

@@ -1,1 +1,0 @@
-# Stoic Utilities

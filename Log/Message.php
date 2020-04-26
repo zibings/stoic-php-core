@@ -28,7 +28,7 @@
 		 * Immutable timestamp for log
 		 * message creation time.
 		 * 
-		 * @var \DateTimeImmutable
+		 * @var \DateTimeInterface
 		 */
 		private $timestamp;
 		/**
@@ -57,7 +57,7 @@
 		 * @param string $message String value of log message.
 		 * @throws \InvalidArgumentException Thrown if invalid log level provided.
 		 */
-		public function __construct($level, $message) {
+		public function __construct(string $level, string $message) {
 			if (array_key_exists($level, self::$validLevels) === false) {
 				throw new \InvalidArgumentException("Invalid log level provided to Stoic\Log\LogMessage: {$level}");
 			}
@@ -75,9 +75,9 @@
 		 * Returns the immutable timestamp marking
 		 * message creation.
 		 * 
-		 * @return \DateTimeImmutable
+		 * @return \DateTimeInterface
 		 */
-		public function getTimestamp() {
+		public function getTimestamp() : \DateTimeInterface {
 			return $this->timestamp;
 		}
 
@@ -101,7 +101,7 @@
 		 * 
 		 * @return string
 		 */
-		public function __toJson() {
+		public function __toJson() : string {
 			return json_encode($this);
 		}
 
@@ -125,7 +125,7 @@
 		 * 
 		 * @return string
 		 */
-		public function __toString() {
+		public function __toString() : string {
 			return sprintf("%s %' -9s %s",
 				$this->timestamp->format('Y-m-d G:i:s.u'),
 				strtoupper($this->level),

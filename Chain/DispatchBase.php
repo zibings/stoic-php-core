@@ -32,9 +32,9 @@
 		/**
 		 * Collection of results from nodes.
 		 * 
-		 * @var array
+		 * @var mixed[]
 		 */
-		private $_results = array();
+		private $_results = [];
 		/**
 		 * Whether or not the dispatch is valid for processing.
 		 * 
@@ -44,12 +44,17 @@
 		/**
 		 * Date and time the dispatch was made valid.
 		 * 
-		 * @var \DateTime
+		 * @var \DateTimeInterface
 		 */
 		private $_calledDateTime = null;
 
 
-		public function __toString() {
+		/**
+		 * Serializes the DispatchBase class to a string.
+		 *
+		 * @return string
+		 */
+		public function __toString() : string {
 			$calledDateTime = ($this->_calledDateTime instanceof \DateTimeInterface) ? $this->_calledDateTime->format("Y-m-d G:i:s") : 'N/A';
 
 			return static::class . "{ \"calledDateTime\": \"" . $calledDateTime . "\", " .
@@ -66,7 +71,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function consume() {
+		public function consume() : bool {
 			if ($this->_isConsumable && !$this->_isConsumed) {
 				$this->_isConsumed = true;
 
@@ -79,9 +84,9 @@
 		/**
 		 * Returns time the dispatch was marked valid.
 		 * 
-		 * @return \DateTime
+		 * @return \DateTimeInterface
 		 */
-		public function getCalledDateTime() {
+		public function getCalledDateTime() : \DateTimeInterface {
 			return $this->_calledDateTime;
 		}
 
@@ -90,7 +95,7 @@
 		 * is stateful, this can be multiple results, otherwise
 		 * it will be null or a single result.
 		 * 
-		 * @return array|null
+		 * @return mixed[]|mixed|null
 		 */
 		public function getResults() {
 			if (count($this->_results) < 1) {
@@ -116,7 +121,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isConsumable() {
+		public function isConsumable() : bool {
 			return $this->_isConsumable;
 		}
 
@@ -127,7 +132,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isConsumed() {
+		public function isConsumed() : bool {
 			return $this->_isConsumed;
 		}
 
@@ -137,7 +142,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isStateful() {
+		public function isStateful() : bool {
 			return $this->_isStateful;
 		}
 
@@ -147,7 +152,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isValid() {
+		public function isValid() : bool {
 			return $this->_isValid;
 		}
 
@@ -156,7 +161,7 @@
 		 * 
 		 * @return DispatchBase
 		 */
-		protected function makeConsumable() {
+		protected function makeConsumable() : DispatchBase {
 			$this->_isConsumable = true;
 
 			return $this;
@@ -167,7 +172,7 @@
 		 * 
 		 * @return DispatchBase
 		 */
-		protected function makeStateful() {
+		protected function makeStateful() : DispatchBase {
 			$this->_isStateful = true;
 
 			return $this;
@@ -179,8 +184,8 @@
 		 * 
 		 * @return DispatchBase
 		 */
-		protected function makeValid() {
-			$this->_calledDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+		protected function makeValid() : DispatchBase {
+			$this->_calledDateTime = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 			$this->_isValid = true;
 
 			return $this;
@@ -191,7 +196,7 @@
 		 * 
 		 * @return integer
 		 */
-		public function numResults() {
+		public function numResults() : int {
 			return count($this->_results);
 		}
 
@@ -203,7 +208,7 @@
 		 * @param mixed $result Result data to store in dispatch.
 		 * @return DispatchBase
 		 */
-		public function setResult($result) {
+		public function setResult($result) : DispatchBase {
 			if (!$this->_isStateful) {
 				$this->_results = array($result);
 			} else {

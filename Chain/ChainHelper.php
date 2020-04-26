@@ -15,7 +15,7 @@
 		 * 
 		 * @var array
 		 */
-		protected $_nodes = array();
+		protected $_nodes = [];
 		/**
 		 * Whether or not instance is an event-chain.
 		 * 
@@ -43,9 +43,8 @@
 		 * 
 		 * @param boolean $isEvent Toggle for event-chain.
 		 * @param boolean $doDebug Toggle for sending debug messages.
-		 * @return void
 		 */
-		public function __construct($isEvent = false, $doDebug = false) {
+		public function __construct(bool $isEvent = false, bool $doDebug = false) {
 			$this->_isEvent = $isEvent;
 			$this->toggleDebug($doDebug);
 
@@ -55,10 +54,10 @@
 		/**
 		 * Toggles the use of debug messages by this instance.
 		 * 
-		 * @param bool $doDebug Toggle for sending debug messages.
+		 * @param boolean $doDebug Toggle for sending debug messages.
 		 * @return ChainHelper
 		 */
-		public function toggleDebug($doDebug) {
+		public function toggleDebug(bool $doDebug) : ChainHelper {
 			$this->_doDebug = ($doDebug) ? true : false;
 
 			return $this;
@@ -67,7 +66,7 @@
 		/**
 		 * Returns the full list of nodes linked to the chain.
 		 * 
-		 * @return array[]
+		 * @return array
 		 */
 		public function getNodeList() {
 			$ret = array();
@@ -88,12 +87,12 @@
 		 * should accept a single string argument.
 		 * 
 		 * @param callable $callback Callable method/function that receives messages.
-		 * @return boolean
+		 * @return void
 		 */
-		public function hookLogger(callable $callback) {
+		public function hookLogger(callable $callback) : void {
 			$this->_logger = $callback;
 
-			return true;
+			return;
 		}
 
 		/**
@@ -102,7 +101,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isEvent() {
+		public function isEvent() : bool {
 			return $this->_isEvent;
 		}
 
@@ -114,7 +113,7 @@
 		 * @param NodeBase $node NodeBase object to register with chain.
 		 * @return ChainHelper
 		 */
-		public function linkNode(NodeBase $node) {
+		public function linkNode(NodeBase $node) : ChainHelper {
 			if (!$node->isValid()) {
 				if ($this->_doDebug) {
 					$this->log("Attempted to add invalid node: " . $node);
@@ -151,7 +150,7 @@
 		 * @param mixed $sender Optional sender data to pass to linked nodes.
 		 * @return boolean
 		 */
-		public function traverse(DispatchBase &$dispatch, $sender = null) {
+		public function traverse(DispatchBase &$dispatch, $sender = null) : bool {
 			if (count($this->_nodes) < 1) {
 				if ($this->_doDebug) {
 					$this->log("Attempted to traverse chain with no nodes");
@@ -218,7 +217,7 @@
 		 * @param string $message Message to send to callback.
 		 * @return void
 		 */
-		protected function log($message) {
+		protected function log(string $message) : void {
 			if ($this->_logger !== null) {
 				call_user_func($this->_logger, $message);
 			}

@@ -31,7 +31,7 @@
 		 * @param DispatchBase $dispatch Collection of Message objects to handle.
 		 * @codeCoverageIgnore
 		 */
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process($sender, DispatchBase &$dispatch) : void {
 			return;
 		}
 	}
