@@ -7,7 +7,7 @@
 	 * functionality.
 	 *
 	 * @package Stoic\Utilities
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	abstract class EnumBase implements \JsonSerializable {
 		/**
@@ -47,7 +47,7 @@
 		 * @param boolean $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
 		 * @return object
 		 */
-		public static function fromString($string, $serializeAsName = true) {
+		public static function fromString(string $string, bool $serializeAsName = true) {
 			$class = get_called_class();
 
 			if ($string === null || empty($string) || !static::validName($string)) {
@@ -128,7 +128,7 @@
 		 * @param string $name String to use as name.
 		 * @return boolean
 		 */
-		public static function validName($name) {
+		public static function validName(string $name) : bool {
 			$consts = static::getConstList();
 
 			return array_key_exists($name, $consts['name']) !== false;
@@ -141,7 +141,7 @@
 		 * @param integer $value Integer to use as value.
 		 * @return boolean
 		 */
-		public static function validValue($value) {
+		public static function validValue(int $value) : bool {
 			$consts = static::getConstList();
 
 			return array_key_exists($value, $consts['value']) !== false;
@@ -152,9 +152,9 @@
 		 * Instantiates a new Enum object.
 		 *
 		 * @param null|integer $value Integer to use as value, defaults to null.
-		 * @param mixed $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @param boolean $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
 		 */
-		public function __construct($value = null, $serializeAsName = true) {
+		public function __construct(?int $value = null, bool $serializeAsName = true) {
 			$this->serializeAsName = $serializeAsName;
 
 			if ($value !== null && static::validValue($value)) {
@@ -172,7 +172,7 @@
 		 *
 		 * @return string
 		 */
-		public function __toString() {
+		public function __toString() : string {
 			if ($this->serializeAsName) {
 				return $this->name ?? '';
 			}
@@ -186,7 +186,7 @@
 		 *
 		 * @return null|string
 		 */
-		public function getName() {
+		public function getName() : ?string {
 			return $this->name;
 		}
 
@@ -196,7 +196,7 @@
 		 *
 		 * @return null|integer
 		 */
-		public function getValue() {
+		public function getValue() : ?int {
 			return $this->value;
 		}
 
@@ -207,7 +207,7 @@
 		 * @param integer $value Integer to test against current value.
 		 * @return boolean
 		 */
-		public function is($value) {
+		public function is(int $value) : bool {
 			if ($this->value === null || $this->value !== $value) {
 				return false;
 			}
@@ -222,7 +222,7 @@
 		 * @param integer[] $values Array of integer values to compare against current value.
 		 * @return boolean
 		 */
-		public function isIn(int ...$values) {
+		public function isIn(int ...$values) : bool {
 			if ($this->value === null) {
 				return false;
 			}
@@ -241,7 +241,7 @@
 		 *
 		 * @return string
 		 */
-		public function jsonSerialize() {
+		public function jsonSerialize() : string {
 			return $this->__toString();
 		}
 	}

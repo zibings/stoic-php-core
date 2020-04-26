@@ -11,7 +11,7 @@
 	 * multiple appenders for output/handling.
 	 * 
 	 * @package Stoic\Log
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	class Logger extends AbstractLogger {
 		/**
@@ -25,7 +25,7 @@
 		 * 
 		 * @var Message[]
 		 */
-		private $messages = array();
+		private $messages = [];
 		/**
 		 * The minimum log level to push to appennders.
 		 * 
@@ -38,7 +38,7 @@
 		 * 
 		 * @var string[]
 		 */
-		protected static $levels = array(
+		protected static $levels = [
 			LogLevel::DEBUG,
 			LogLevel::INFO,
 			LogLevel::NOTICE,
@@ -47,7 +47,7 @@
 			LogLevel::CRITICAL,
 			LogLevel::ALERT,
 			LogLevel::EMERGENCY
-		);
+		];
 
 
 		/**
@@ -62,7 +62,7 @@
 		 * @param null|string $minimumLevel Optional minimum log level for output; Default is LogLevel::DEBUG
 		 * @param null|AppenderBase[] $appenders Optional collection of LogAppenderBase objects to assign.
 		 */
-		public function __construct($minimumLevel = null, array $appenders = null) {
+		public function __construct(?string $minimumLevel = null, ?array $appenders = null) {
 			$this->appenders = new ChainHelper();
 
 			if ($minimumLevel !== null) {
@@ -90,7 +90,7 @@
 		 * @param AppenderBase $appender Appender which extends the AppenderBase abstract class.
 		 * @throws \Psr\Log\InvalidArgumentException Thrown if invalid appender argument provided.
 		 */
-		public function addAppender(AppenderBase $appender) {
+		public function addAppender(AppenderBase $appender) : void {
 			$this->appenders->linkNode($appender);
 
 			return;
@@ -103,7 +103,7 @@
 		 * @param array $context Array of context values to interpolate with placeholers.
 		 * @return string
 		 */
-		protected function interpolate($message, array $context) {
+		protected function interpolate(string $message, array $context) : string {
 			if (strpos($message, '{') === false || strpos($message, '}') === false) {
 				return $message;
 			}
@@ -159,7 +159,7 @@
 		 * @param string $level String value of level to check against minimum.
 		 * @return boolean
 		 */
-		protected function meetsMinimumLevel($level) {
+		protected function meetsMinimumLevel(string $level) : bool {
 			return array_search($level, self::$levels) >= array_search($this->minLevel, self::$levels);
 		}
 
@@ -168,7 +168,7 @@
 		 * messages to output and traverses them through
 		 * the appender stack.
 		 */
-		public function output() {
+		public function output() : void {
 			$messages = array();
 
 			foreach (array_values($this->messages) as $message) {

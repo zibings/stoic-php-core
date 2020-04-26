@@ -9,7 +9,7 @@
 	 * will be passed to log appenders.
 	 * 
 	 * @package Stoic\Log
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	class MessageDispatch extends DispatchBase {
 		/**
@@ -17,7 +17,7 @@
 		 * 
 		 * @var Message[]
 		 */
-		public $messages = array();
+		public $messages = [];
 
 
 		/**
@@ -25,7 +25,7 @@
 		 * 
 		 * @param Message[] $messages Collection of Message objects to handle.
 		 */
-		public function initialize($input) {
+		public function initialize($input) : void {
 			if (!is_array($input) && (!is_object($input) || !($input instanceof Message))) {
 				return;
 			}

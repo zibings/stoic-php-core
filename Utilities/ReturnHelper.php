@@ -7,7 +7,7 @@
 	 * method/function returns.
 	 * 
 	 * @package Stoic\Utilities
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 	class ReturnHelper {
 		/**
@@ -39,8 +39,8 @@
 		 * status is STATUS_BAD.
 		 */
 		public function __construct() {
-			$this->_messages = array();
-			$this->_results = array();
+			$this->_messages = [];
+			$this->_results = [];
 			$this->_status = self::STATUS_BAD;
 
 			return;
@@ -51,7 +51,7 @@
 		 * 
 		 * @param string $message String value of message to add to collection.
 		 */
-		public function addMessage($message) {
+		public function addMessage(string $message) : void {
 			$this->_messages[] = $message;
 
 			return;
@@ -64,7 +64,7 @@
 		 * @param string[] $messages Array of strings to add to collection.
 		 * @throws \InvalidArgumentException Thrown if null or empty array provided.
 		 */
-		public function addMessages(array $messages) {
+		public function addMessages(array $messages) : void {
 			if ($messages === null || count($messages) < 1) {
 				throw new \InvalidArgumentException("Messages array to ReturnHelper::addMessages() must be array with elements");
 			}
@@ -81,7 +81,7 @@
 		 * 
 		 * @param mixed $result Result value to add to collection.
 		 */
-		public function addResult($result) {
+		public function addResult($result) : void {
 			$this->_results[] = $result;
 
 			return;
@@ -94,7 +94,7 @@
 		 * @param mixed[] $results Array of results to add to collection.
 		 * @throws \InvalidArgumentException Thrown if null or empty array provided.
 		 */
-		public function addResults(array $results) {
+		public function addResults(array $results) : void {
 			if ($results === null || count($results) < 1) {
 				throw new \InvalidArgumentException("Results array to ReturnHelper::addResults() must be array with elements");
 			}
@@ -112,7 +112,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isBad() {
+		public function isBad() : bool {
 			return $this->_status === self::STATUS_BAD;
 		}
 
@@ -122,7 +122,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function isGood() {
+		public function isGood() : bool {
 			return $this->_status === self::STATUS_GOOD;
 		}
 
@@ -150,7 +150,7 @@
 		 * 
 		 * @return boolean
 		 */
-		public function hasMessages() {
+		public function hasMessages() : bool {
 			return count($this->_messages) > 0;
 		}
 
@@ -160,14 +160,14 @@
 		 * 
 		 * @return boolean
 		 */
-		public function hasResults() {
+		public function hasResults() : bool {
 			return count($this->_results) > 0;
 		}
 
 		/**
 		 * Sets the internal status as STATUS_BAD.
 		 */
-		public function makeBad() {
+		public function makeBad() : void {
 			$this->_status = self::STATUS_BAD;
 
 			return;
@@ -176,7 +176,7 @@
 		/**
 		 * Sets the internal status as STATUS_GOOD.
 		 */
-		public function makeGood() {
+		public function makeGood() : void {
 			$this->_status = self::STATUS_GOOD;
 
 			return;
