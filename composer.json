@@ -1,7 +1,7 @@
 {
 	"name": "stoic/stoic",
 	"description": "Stoic framework Core component",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"homepage": "https://stoic-framework.com",
 	"autoload": {
 		"psr-0": {
@@ -19,11 +19,11 @@
 		]
 	},
 	"require": {
-		"php": "^7.0",
+		"php": ">=7.4",
 		"psr/log": "^1.0.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^7"
+		"phpunit/phpunit": "^9"
 	},
 	"provide": {
 		"psr/log-implementation": "1.0.0"

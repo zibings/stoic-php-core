@@ -14,13 +14,14 @@
 			$ret->addMessage("Testing");
 			self::assertEquals(1, count($ret->getMessages()), "ReturnHelper returns the correct number of messages");
 
-			$ret->addMessages(array(
-				"Testing2",
-				"Testing3"
-			));
+			$ret->addMessages(["Testing2", "Testing3"]);
 			self::assertEquals(3, count($ret->getMessages()), "ReturnHelper returns the correct number of messages");
 			self::assertTrue($ret->hasMessages(), "ReturnHelper notes presence of messages correctly");
-			self::assertArraySubset(array("Testing", "Testing2", "Testing3"), $ret->getMessages(), true, "ReturnHelper returns the correct messages");
+
+			$messages = $ret->getMessages();
+			self::assertEquals("Testing", $messages[0], "ReturnHelper returned the correct messages");
+			self::assertEquals("Testing2", $messages[1], "ReturnHelper returned the correct messages");
+			self::assertEquals("Testing3", $messages[2], "ReturnHelper returned the correct messages");
 
 			try {
 				$ret->addMessages([]);
@@ -40,13 +41,14 @@
 			$ret->addResult("Testing");
 			self::assertEquals(1, count($ret->getResults()), "ReturnHelper returns the correct number of results");
 
-			$ret->addResults(array(
-				"Testing2",
-				"Testing3"
-			));
+			$ret->addResults(["Testing2", "Testing3"]);
 			self::assertEquals(3, count($ret->getResults()), "ReturnHelper returns the correct number of results");
 			self::assertTrue($ret->hasResults(), "ReturnHelper notes presence of results correctly");
-			self::assertArraySubset(array("Testing", "Testing2", "Testing3"), $ret->getResults(), true, "ReturnHelper returns the correct results");
+
+			$results = $ret->getResults();
+			self::assertEquals("Testing", $results[0], "ReturnHelper returned the correct messages");
+			self::assertEquals("Testing2", $results[1], "ReturnHelper returned the correct messages");
+			self::assertEquals("Testing3", $results[2], "ReturnHelper returned the correct messages");
 
 			try {
 				$ret->addResults([]);
