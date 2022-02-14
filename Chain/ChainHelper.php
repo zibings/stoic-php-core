@@ -2,32 +2,33 @@
 
 	namespace Stoic\Chain;
 
+	use JetBrains\PhpStorm\Pure;
+
 	/**
-	 * Class to maintain groups (chains) of nodes
-	 * and send events to them.
+	 * Class to maintain groups (chains) of nodes and send events to them.
 	 * 
 	 * @package Stoic\Chain
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	class ChainHelper {
 		/**
 		 * Group of nodes (one or more).
 		 * 
-		 * @var array
+		 * @var NodeBase[]
 		 */
-		protected $_nodes = [];
+		protected array $_nodes = [];
 		/**
-		 * Whether or not instance is an event-chain.
+		 * Whether instance is an event-chain.
 		 * 
-		 * @var boolean
+		 * @var bool
 		 */
-		protected $_isEvent = false;
+		protected bool $_isEvent = false;
 		/**
-		 * Whether or not instance should send debug messages.
-		 * 
-		 * @var boolean
+		 * Whether instance should send debug messages.
+		 *
+		 * @var bool
 		 */
-		protected $_doDebug = false;
+		protected bool $_doDebug = false;
 		/**
 		 * Optional callback that receives debug messages (if enabled).
 		 * 
@@ -37,12 +38,11 @@
 
 
 		/**
-		 * Creates new instance of ChainHelper class.  If set
-		 * as an event-chain, only one node may be linked to
-		 * chain at any given time.
-		 * 
-		 * @param boolean $isEvent Toggle for event-chain.
-		 * @param boolean $doDebug Toggle for sending debug messages.
+		 * Creates new instance of ChainHelper class.  If set as an event-chain, only one node may be linked to chain at
+		 * any given time.
+		 *
+		 * @param bool $isEvent Toggle for event-chain.
+		 * @param bool $doDebug Toggle for sending debug messages.
 		 */
 		public function __construct(bool $isEvent = false, bool $doDebug = false) {
 			$this->_isEvent = $isEvent;
@@ -54,37 +54,37 @@
 		/**
 		 * Toggles the use of debug messages by this instance.
 		 * 
-		 * @param boolean $doDebug Toggle for sending debug messages.
+		 * @param bool $doDebug Toggle for sending debug messages.
 		 * @return ChainHelper
 		 */
 		public function toggleDebug(bool $doDebug) : ChainHelper {
-			$this->_doDebug = ($doDebug) ? true : false;
+			$this->_doDebug = $doDebug;
 
 			return $this;
 		}
 
 		/**
 		 * Returns the full list of nodes linked to the chain.
-		 * 
+		 *
 		 * @return array
 		 */
-		public function getNodeList() {
-			$ret = array();
+		#[Pure]
+		public function getNodeList() : array {
+			$ret = [];
 
-			foreach (array_values($this->_nodes) as $node) {
-				$ret[] = array(
-					'key' => $node->getKey(),
+			foreach ($this->_nodes as $node) {
+				$ret[] = [
+					'key'     => $node->getKey(),
 					'version' => $node->getVersion()
-				);
+				];
 			}
 
 			return $ret;
 		}
 
 		/**
-		 * Attaches the given callback to the chain to
-		 * receive debug messages, if enabled.  Callbacks
-		 * should accept a single string argument.
+		 * Attaches the given callback to the chain to receive debug messages, if enabled.  Callbacks should accept a
+		 * single string argument.
 		 * 
 		 * @param callable $callback Callable method/function that receives messages.
 		 * @return void
@@ -96,19 +96,17 @@
 		}
 
 		/**
-		 * Returns whether or not chain is setup as an
-		 * event-chain.
+		 * Returns whether chain is set up as an event-chain.
 		 * 
-		 * @return boolean
+		 * @return bool
 		 */
 		public function isEvent() : bool {
 			return $this->_isEvent;
 		}
 
 		/**
-		 * Registers a NodeBase object with the chain.  If
-		 * chain is an event-chain, this will overwrite any
-		 * existing node.  If node is invalid, link will fail.
+		 * Registers a NodeBase object with the chain.  If chain is an event-chain, this will overwrite any existing node.
+		 * If node is invalid, link will fail.
 		 * 
 		 * @param NodeBase $node NodeBase object to register with chain.
 		 * @return ChainHelper
@@ -140,17 +138,14 @@
 		}
 
 		/**
-		 * Triggers distribution of given dispatch to all
-		 * linked nodes in chain.  Will return false if no
-		 * nodes are linked, the dispatch is invalid, or
-		 * the dispatch is consumable and has already been
-		 * consumed.
+		 * Triggers distribution of given dispatch to all linked nodes in chain.  Will return false if no nodes are linked,
+		 * the dispatch is invalid, or the dispatch is consumable and has already been consumed.
 		 * 
 		 * @param DispatchBase $dispatch DispatchBase object to distribute to linked nodes.
 		 * @param mixed $sender Optional sender data to pass to linked nodes.
-		 * @return boolean
+		 * @return bool
 		 */
-		public function traverse(DispatchBase &$dispatch, $sender = null) : bool {
+		public function traverse(DispatchBase &$dispatch, mixed $sender = null) : bool {
 			if (count($this->_nodes) < 1) {
 				if ($this->_doDebug) {
 					$this->log("Attempted to traverse chain with no nodes");
@@ -211,8 +206,7 @@
 		}
 
 		/**
-		 * Conditionally sends debug message to registered
-		 * callback.
+		 * Conditionally sends debug message to registered callback.
 		 * 
 		 * @param string $message Message to send to callback.
 		 * @return void

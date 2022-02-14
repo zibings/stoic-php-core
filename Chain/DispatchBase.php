@@ -8,45 +8,45 @@
 	 * chain system.
 	 * 
 	 * @package Stoic\Chain
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	abstract class DispatchBase {
 		/**
-		 * Whether or not the dispatch is 'consumable'.
+		 * Whether the dispatch is 'consumable'.
 		 * 
-		 * @var boolean
+		 * @var bool
 		 */
-		protected $_isConsumable = false;
+		protected bool $_isConsumable = false;
 		/**
-		 * Whether or not the dispatch should retain results.
+		 * Whether the dispatch should retain results.
 		 * 
-		 * @var boolean
+		 * @var bool
 		 */
-		protected $_isStateful = false;
+		protected bool $_isStateful = false;
 		/**
-		 * Whether or not the dispatch has been consumed by a node.
+		 * Whether the dispatch has been consumed by a node.
 		 * 
-		 * @var boolean
+		 * @var bool
 		 */
-		protected $_isConsumed = false;
+		protected bool $_isConsumed = false;
 		/**
 		 * Collection of results from nodes.
-		 * 
-		 * @var mixed[]
+		 *
+		 * @var mixed
 		 */
-		private $_results = [];
+		private array $_results = [];
 		/**
-		 * Whether or not the dispatch is valid for processing.
-		 * 
-		 * @var boolean
+		 * Whether the dispatch is valid for processing.
+		 *
+		 * @var bool
 		 */
-		protected $_isValid = false;
+		protected bool $_isValid = false;
 		/**
 		 * Date and time the dispatch was made valid.
 		 * 
-		 * @var \DateTimeInterface
+		 * @var null|\DateTimeInterface
 		 */
-		private $_calledDateTime = null;
+		private ?\DateTimeInterface $_calledDateTime = null;
 
 
 		/**
@@ -64,12 +64,10 @@
 		}
 
 		/**
-		 * Marks the dispatch as having been consumed.  If
-		 * the dispatch is not consumable or has already
-		 * been marked as consumed, returns false.  Otherwise
-		 * returns true.
+		 * Marks the dispatch as having been consumed.  If the dispatch is not consumable or has already been marked as
+		 * consumed, returns false.  Otherwise, returns true.
 		 * 
-		 * @return boolean
+		 * @return bool
 		 */
 		public function consume() : bool {
 			if ($this->_isConsumable && !$this->_isConsumed) {
@@ -91,13 +89,12 @@
 		}
 
 		/**
-		 * Returns any results stored in dispatch.  If dispatch
-		 * is stateful, this can be multiple results, otherwise
-		 * it will be null or a single result.
+		 * Returns any results stored in dispatch.  If dispatch is stateful, this can be multiple results, otherwise it
+		 * will be null or a single result.
 		 * 
-		 * @return mixed[]|mixed|null
+		 * @return mixed
 		 */
-		public function getResults() {
+		public function getResults() : mixed {
 			if (count($this->_results) < 1) {
 				return null;
 			}
@@ -106,51 +103,46 @@
 		}
 
 		/**
-		 * Abstract method that handles initialization.  Should
-		 * mark dispatch as valid if successful, otherwise
-		 * dispatch won't be usable with \ChainHelper objects.
+		 * Abstract method that handles initialization.  Should mark dispatch as valid if successful, otherwise dispatch
+		 * won't be usable with ChainHelper objects.
 		 * 
 		 * @param mixed $input Initialization data for dispatch.
 		 */
-		abstract public function initialize($input);
+		abstract public function initialize(mixed $input);
 
 		/**
-		 * Returns whether or not dispatch can be marked as
-		 * consumed.  If toggled and consumed, a \ChainHelper
-		 * will refuse to further distribute the dispatch.
+		 * Returns whether dispatch can be marked as consumed.  If toggled and consumed, a ChainHelper will refuse to
+		 * further distribute the dispatch.
 		 * 
-		 * @return boolean
+		 * @return bool
 		 */
 		public function isConsumable() : bool {
 			return $this->_isConsumable;
 		}
 
 		/**
-		 * Returns whether or not dispatch has been marked
-		 * as consumed.  If consumed, a \ChainHelper will
-		 * refuse to further distribute the dispatch.
+		 * Returns whether dispatch has been marked as consumed.  If consumed, a ChainHelper will refuse to further
+		 * distribute the dispatch.
 		 * 
-		 * @return boolean
+		 * @return bool
 		 */
 		public function isConsumed() : bool {
 			return $this->_isConsumed;
 		}
 
 		/**
-		 * Returns whether or not dispatch will hold multiple
-		 * results during processing.
+		 * Returns whether dispatch will hold multiple results during processing.
 		 * 
-		 * @return boolean
+		 * @return bool
 		 */
 		public function isStateful() : bool {
 			return $this->_isStateful;
 		}
 
 		/**
-		 * Returns whether or not dispatch is considered valid
-		 * for processing by nodes.
+		 * Returns whether dispatch is considered valid for processing by nodes.
 		 * 
-		 * @return boolean
+		 * @return bool
 		 */
 		public function isValid() : bool {
 			return $this->_isValid;
@@ -179,9 +171,9 @@
 		}
 
 		/**
-		 * Sets dispatch as valid and records the current
-		 * date and time in UTC offset.
-		 * 
+		 * Sets dispatch as valid and records the current date and time in UTC offset.
+		 *
+		 * @throws \Exception
 		 * @return DispatchBase
 		 */
 		protected function makeValid() : DispatchBase {
@@ -194,23 +186,22 @@
 		/**
 		 * Returns number of results stored in dispatch.
 		 * 
-		 * @return integer
+		 * @return int
 		 */
 		public function numResults() : int {
 			return count($this->_results);
 		}
 
 		/**
-		 * Sets a result in dispatch.  If dispatch is stateful
-		 * result is added to array, otherwise it replaces any
-		 * existing results.
+		 * Sets a result in dispatch.  If dispatch is stateful result is added to array, otherwise it replaces any existing
+		 * results.
 		 * 
 		 * @param mixed $result Result data to store in dispatch.
 		 * @return DispatchBase
 		 */
-		public function setResult($result) : DispatchBase {
+		public function setResult(mixed $result) : DispatchBase {
 			if (!$this->_isStateful) {
-				$this->_results = array($result);
+				$this->_results = [$result];
 			} else {
 				$this->_results[] = $result;
 			}

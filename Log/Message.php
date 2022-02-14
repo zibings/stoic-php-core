@@ -2,6 +2,7 @@
 
 	namespace Stoic\Log;
 
+	use JetBrains\PhpStorm\ArrayShape;
 	use Psr\Log\LogLevel;
 	use Psr\Log\InvalidArgumentException;
 
@@ -17,27 +18,27 @@
 		 * 
 		 * @var string
 		 */
-		public $level;
+		public string $level;
 		/**
 		 * String value of log message.
 		 * 
 		 * @var string
 		 */
-		public $message;
+		public string $message;
 		/**
 		 * Immutable timestamp for log
 		 * message creation time.
 		 * 
 		 * @var \DateTimeInterface
 		 */
-		private $timestamp;
+		private \DateTimeInterface $timestamp;
 		/**
 		 * Static collection of log levels
 		 * to speed checking of level validity.
 		 * 
 		 * @var array
 		 */
-		private static $validLevels = array(
+		private static array $validLevels = [
 			LogLevel::DEBUG => true,
 			LogLevel::INFO => true,
 			LogLevel::NOTICE => true,
@@ -46,7 +47,7 @@
 			LogLevel::CRITICAL => true,
 			LogLevel::ALERT => true,
 			LogLevel::EMERGENCY => true
-		);
+		];
 
 
 		/**
@@ -87,12 +88,17 @@
 		 * 
 		 * @return string[]
 		 */
-		public function __toArray() {
-			return array(
-				'level' => $this->level,
-				'message' => $this->message,
+		#[ArrayShape([
+			'level'     => "string",
+			'message'   => "string",
+			'timestamp' => "string"
+		])]
+		public function __toArray() : array {
+			return [
+				'level'     => $this->level,
+				'message'   => $this->message,
 				'timestamp' => $this->timestamp->format('Y-m-d G:i:s.u')
-			);
+			];
 		}
 
 		/**
@@ -111,7 +117,12 @@
 		 *
 		 * @return string[]
 		 */
-		public function jsonSerialize() {
+		#[ArrayShape([
+			'level'     => "string",
+			'message'   => "string",
+			'timestamp' => "string"
+		])]
+		public function jsonSerialize() : array {
 			return [
 				'level' => strtoupper($this->level),
 				'message' => $this->message,

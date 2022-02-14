@@ -8,21 +8,21 @@
 	 * system.
 	 * 
 	 * @package Stoic\Chain
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	abstract class NodeBase {
 		/**
 		 * Key that identifies the node.
 		 * 
-		 * @var string
+		 * @var null|string
 		 */
-		protected $_key = null;
+		protected ?string $_key = null;
 		/**
-		 * Version number for the node.
+		 * Version for the node.
 		 * 
-		 * @var string
+		 * @var null|string
 		 */
-		protected $_version = null;
+		protected ?string $_version = null;
 
 
 		/**

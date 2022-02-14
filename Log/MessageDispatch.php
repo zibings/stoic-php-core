@@ -17,13 +17,15 @@
 		 * 
 		 * @var Message[]
 		 */
-		public $messages = [];
+		public array $messages = [];
 
 
 		/**
 		 * Initializes the dispatch message collection.
-		 * 
-		 * @param Message[] $messages Collection of Message objects to handle.
+		 *
+		 * @param Message|Message[] $input Collection of Message objects to handle.
+		 * @throws \Exception
+		 * @return void
 		 */
 		public function initialize($input) : void {
 			if (!is_array($input) && (!is_object($input) || !($input instanceof Message))) {
@@ -35,7 +37,7 @@
 					return;
 				}
 
-				foreach (array_values($input) as $msg) {
+				foreach ($input as $msg) {
 					if ($msg instanceof Message) {
 						$this->messages[] = $msg;
 					}
