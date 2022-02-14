@@ -2,6 +2,8 @@
 
 	namespace Stoic\Utilities;
 
+	use JetBrains\PhpStorm\Pure;
+
 	/**
 	 * Abstract class to provide basic Enum type
 	 * functionality.
@@ -11,32 +13,32 @@
 	 */
 	abstract class EnumBase implements \JsonSerializable {
 		/**
-		 * Static internal cache of const lookups.
-		 *
-		 * @var array
-		 */
-		protected static $constCache = [];
-		
-
-		/**
 		 * Internal storage for name.
 		 *
 		 * @var null|string
 		 */
-		protected $name = null;
+		protected ?string $name = null;
 		/**
 		 * Internal storage for value.
 		 *
 		 * @var null|integer
 		 */
-		protected $value = null;
+		protected ?int $value = null;
 		/**
-		 * Determines whether or not to serialize as the
+		 * Determines whether to serialize as the
 		 * name of the set value.
 		 *
-		 * @var boolean
+		 * @var bool
 		 */
-		protected $serializeAsName = true;
+		protected bool $serializeAsName = true;
+
+
+		/**
+		 * Static internal cache of const lookups.
+		 *
+		 * @var array[]
+		 */
+		protected static array $constCache = [];
 
 
 		/**
@@ -45,12 +47,13 @@
 		 *
 		 * @param string $string String to use as name.
 		 * @param boolean $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
-		 * @return object
+		 * @throws \ReflectionException
+		 * @return static
 		 */
-		public static function fromString(string $string, bool $serializeAsName = true) {
+		public static function fromString(string $string, bool $serializeAsName = true) : static {
 			$class = get_called_class();
 
-			if ($string === null || empty($string) || !static::validName($string)) {
+			if (empty($string) || !static::validName($string)) {
 				return new $class();
 			}
 
@@ -66,9 +69,10 @@
 		 * Static method to return the const lookup for the
 		 * called class.
 		 *
-		 * @return array
+		 * @throws \ReflectionException
+		 * @return array[]
 		 */
-		public static function getConstList() {
+		public static function getConstList() : array {
 			$cclass = get_called_class();
 
 			if (array_key_exists($cclass, static::$constCache) === false) {
@@ -89,19 +93,47 @@
 		}
 
 		/**
-		 * Attempts to instantiate an EnumBase class based on the given
-		 * value.  If the value is already the requested class, it is
-		 * returned.  If the value is a valid value for the class, a new
-		 * instance of the class with the value assigned is returned.  In
-		 * all other cases a blank instance of the requested class is
-		 * returned.
+		 * Attempts to instantiate an EnumBase class based on the given value. If value is the requested class, it is
+		 * simply returned. If the value is valid as value, it is used to instantiate a new instance of the class. In all
+		 * other cases a blank instance of the class is returned.
 		 *
-		 * @param integer|object $value The value which may or may not be valid as an enum class/value.
-		 * @param string $className Fully qualified class name to return.
-		 * @throws \InvalidArgumentException
-		 * @return EnumBase
+		 * @param int|EnumBase|null $value Value which may be valid for the enum class/value.
+		 * @param bool $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @throws \ReflectionException
+		 * @return static
 		 */
-		public static function tryGetEnum($value, $className) {
+		public static function tryGet(null|int|EnumBase $value, bool $serializeAsName = true) : static {
+			if ($value === null) {
+				return new static();
+			}
+
+			$static = new static();
+
+			if (is_a($value, static::class)) {
+				return $value;
+			}
+
+			if (!self::validValue($value)) {
+				return $static;
+			}
+
+			$static->setValue($value);
+
+			return $static;
+		}
+
+		/**
+		 * Attempts to instantiate an EnumBase class based on the given value.  If the value is already the requested
+		 * class, it is returned.  If the value is a valid value for the class, a new instance of the class with the value
+		 * assigned is returned.  In all other cases a blank instance of the requested class is returned.
+		 *
+		 * @param integer|static|null $value The value which may or may not be valid as an enum class/value.
+		 * @param string $className Fully qualified class name to return.
+		 * @param bool $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @return EnumBase
+		 *@throws \InvalidArgumentException|\ReflectionException
+		 */
+		public static function tryGetEnum(null|int|EnumBase $value, string $className, bool $serializeAsName = true) : EnumBase {
 			if (!is_a($className, EnumBase::class, true)) {
 				throw new \InvalidArgumentException("Cannot attempt to retrieve an enum from a class that doesn't extend EnumBase");
 			}
@@ -126,12 +158,11 @@
 		 * object's possible constants.
 		 *
 		 * @param string $name String to use as name.
-		 * @return boolean
+		 * @throws \ReflectionException
+		 * @return bool
 		 */
 		public static function validName(string $name) : bool {
-			$consts = static::getConstList();
-
-			return array_key_exists($name, $consts['name']) !== false;
+			return array_key_exists($name, static::getConstList()['name']) !== false;
 		}
 
 		/**
@@ -139,12 +170,11 @@
 		 * object's possible constants.
 		 *
 		 * @param integer $value Integer to use as value.
+		 * @throws \ReflectionException
 		 * @return boolean
 		 */
 		public static function validValue(int $value) : bool {
-			$consts = static::getConstList();
-
-			return array_key_exists($value, $consts['value']) !== false;
+			return array_key_exists($value, static::getConstList()['value']) !== false;
 		}
 
 
@@ -153,16 +183,11 @@
 		 *
 		 * @param null|integer $value Integer to use as value, defaults to null.
 		 * @param boolean $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @throws \ReflectionException
 		 */
 		public function __construct(?int $value = null, bool $serializeAsName = true) {
 			$this->serializeAsName = $serializeAsName;
-
-			if ($value !== null && static::validValue($value)) {
-				$consts = static::getConstList();
-
-				$this->name = $consts['value'][$value];
-				$this->value = $value;
-			}
+			$this->setValue($value);
 
 			return;
 		}
@@ -204,8 +229,8 @@
 		 * Determines if the current set value is the same
 		 * as the given value.
 		 *
-		 * @param integer $value Integer to test against current value.
-		 * @return boolean
+		 * @param int $value Integer to test against current value.
+		 * @return bool
 		 */
 		public function is(int $value) : bool {
 			if ($this->value === null || $this->value !== $value) {
@@ -219,15 +244,15 @@
 		 * Determines if the current value is equal to any of the
 		 * supplied values.
 		 *
-		 * @param integer[] $values Array of integer values to compare against current value.
-		 * @return boolean
+		 * @param int[] $values Array of integer values to compare against current value.
+		 * @return bool
 		 */
 		public function isIn(int ...$values) : bool {
 			if ($this->value === null) {
 				return false;
 			}
 
-			foreach (array_values($values) as $val) {
+			foreach ($values as $val) {
 				if ($this->value === $val) {
 					return true;
 				}
@@ -241,7 +266,26 @@
 		 *
 		 * @return string
 		 */
+		#[Pure]
 		public function jsonSerialize() : string {
 			return $this->__toString();
+		}
+
+		/**
+		 * Internal method to set the value.
+		 *
+		 * @param int|null $value Integer to use as value, defaults to null,
+		 * @throws \ReflectionException
+		 * @return void
+		 */
+		protected function setValue(?int $value = null) : void {
+			if ($value === null || !static::validValue($value)) {
+				return;
+			}
+
+			$this->name  = static::getConstList()['value'][$value];
+			$this->value = $value;
+
+			return;
 		}
 	}
