@@ -85,11 +85,6 @@
 		 *
 		 * @return string[]
 		 */
-		#[ArrayShape([
-			'level'     => "string",
-			'message'   => "string",
-			'timestamp' => "string"
-		])]
 		public function __toArray() : array {
 			return [
 				'level'     => $this->level,
@@ -112,11 +107,6 @@
 		 *
 		 * @return string[]
 		 */
-		#[ArrayShape([
-			'level'     => "string",
-			'message'   => "string",
-			'timestamp' => "string"
-		])]
 		public function jsonSerialize() : array {
 			return [
 				'level' => strtoupper($this->level),

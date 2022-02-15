@@ -140,9 +140,10 @@
 		 *
 		 * Generates a Stoic\LogMessage object for the provided message
 		 *
-		 * @param string $level String value of log level for message.
+		 * @param string $level   String value of log level for message.
 		 * @param string $message String value of log message.
-		 * @param array $context Optional context array for replacing placeholders in message string.
+		 * @param array  $context Optional context array for replacing placeholders in message string.
+		 * @throws \Exception
 		 * @return void
 		 */
 		public function log($level, $message, array $context = []) {

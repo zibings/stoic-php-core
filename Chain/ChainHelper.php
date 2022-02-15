@@ -69,11 +69,6 @@
 		 *
 		 * @return array
 		 */
-		#[Pure]
-		#[ArrayShape([[
-			"key"     => "string",
-		  "version" => "string"
-		]])]
 		public function getNodeList() : array {
 			$ret = [];
 
