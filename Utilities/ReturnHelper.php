@@ -3,28 +3,27 @@
 	namespace Stoic\Utilities;
 
 	/**
-	 * Class to provide more data for
-	 * method/function returns.
-	 * 
+	 * Class to provide more data for method/function returns.
+	 *
 	 * @package Stoic\Utilities
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	class ReturnHelper {
 		/**
 		 * Array of messages in this return.
-		 * 
+		 *
 		 * @var string[]
 		 */
 		protected array $_messages;
 		/**
 		 * Array of results in this return.
-		 * 
+		 *
 		 * @var array[]
 		 */
 		protected array $_results;
 		/**
 		 * Current status of this return.
-		 * 
+		 *
 		 * @var int
 		 */
 		protected int $_status;
@@ -35,8 +34,7 @@
 
 
 		/**
-		 * Instantiates a new ReturnHelper class. Default
-		 * status is STATUS_BAD.
+		 * Instantiates a new ReturnHelper class. Default status is STATUS_BAD.
 		 */
 		public function __construct() {
 			$this->_messages = [];
@@ -48,7 +46,7 @@
 
 		/**
 		 * Adds a message onto the internal collection.
-		 * 
+		 *
 		 * @param string $message String value of message to add to collection.
 		 * @return void
 		 */
@@ -59,9 +57,8 @@
 		}
 
 		/**
-		 * Adds a group of messages onto the internal
-		 * collection.
-		 * 
+		 * Adds a group of messages onto the internal collection.
+		 *
 		 * @param string[] $messages Array of strings to add to collection.
 		 * @throws \InvalidArgumentException
 		 * @return void
@@ -80,7 +77,7 @@
 
 		/**
 		 * Adds a result onto the internal collection.
-		 * 
+		 *
 		 * @param mixed $result Result value to add to collection.
 		 * @return void
 		 */
@@ -91,9 +88,8 @@
 		}
 
 		/**
-		 * Adds a group of results onto the internal
-		 * collection.
-		 * 
+		 * Adds a group of results onto the internal collection.
+		 *
 		 * @param array[] $results Array of results to add to collection.
 		 * @throws \InvalidArgumentException
 		 * @return void
@@ -111,8 +107,7 @@
 		}
 
 		/**
-		 * Returns TRUE if the current internal status
-		 * is set to STATUS_BAD.
+		 * Returns TRUE if the current internal status is set to STATUS_BAD.
 		 *
 		 * @return bool
 		 */
@@ -121,9 +116,8 @@
 		}
 
 		/**
-		 * Returns TRUE if the current internal status
-		 * is set to STATUS_GOOD.
-		 * 
+		 * Returns TRUE if the current internal status is set to STATUS_GOOD.
+		 *
 		 * @return bool
 		 */
 		public function isGood() : bool {
@@ -132,7 +126,7 @@
 
 		/**
 		 * Returns the internal collection of messages.
-		 * 
+		 *
 		 * @return string[]
 		 */
 		public function getMessages() : array {
@@ -141,7 +135,7 @@
 
 		/**
 		 * Returns the internal collection of results.
-		 * 
+		 *
 		 * @return array[]
 		 */
 		public function getResults() : array {
@@ -149,9 +143,8 @@
 		}
 
 		/**
-		 * Returns TRUE if there are messages stored in
-		 * the internal collection.
-		 * 
+		 * Returns TRUE if there are messages stored in the internal collection.
+		 *
 		 * @return bool
 		 */
 		public function hasMessages() : bool {
@@ -159,9 +152,8 @@
 		}
 
 		/**
-		 * Returns TRUE if there are results stored in
-		 * the internal collection.
-		 * 
+		 * Returns TRUE if there are results stored in the internal collection.
+		 *
 		 * @return bool
 		 */
 		public function hasResults() : bool {

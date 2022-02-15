@@ -3,39 +3,39 @@
 	namespace Stoic\Log;
 
 	use JetBrains\PhpStorm\ArrayShape;
+
 	use Psr\Log\LogLevel;
-	use Psr\Log\InvalidArgumentException;
 
 	/**
 	 * Represents a log message.
-	 * 
+	 *
 	 * @package Stoic\Log
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	class Message implements \JsonSerializable {
 		/**
 		 * String value of message level.
-		 * 
+		 *
 		 * @var string
 		 */
 		public string $level;
 		/**
 		 * String value of log message.
-		 * 
+		 *
 		 * @var string
 		 */
 		public string $message;
 		/**
-		 * Immutable timestamp for log
-		 * message creation time.
-		 * 
+		 * Immutable timestamp for log message creation time.
+		 *
 		 * @var \DateTimeInterface
 		 */
 		private \DateTimeInterface $timestamp;
+
+
 		/**
-		 * Static collection of log levels
-		 * to speed checking of level validity.
-		 * 
+		 * Static collection of log levels to speed checking of level validity.
+		 *
 		 * @var array
 		 */
 		private static array $validLevels = [
@@ -51,12 +51,11 @@
 
 
 		/**
-		 * Instantiates a new Message object with
-		 * given level and message.
-		 * 
+		 * Instantiates a new Message object with given level and message.
+		 *
 		 * @param string $level String value of message level.
 		 * @param string $message String value of log message.
-		 * @throws \InvalidArgumentException Thrown if invalid log level provided.
+		 * @throws \Exception|\InvalidArgumentException
 		 */
 		public function __construct(string $level, string $message) {
 			if (array_key_exists($level, self::$validLevels) === false) {
@@ -73,9 +72,8 @@
 		}
 
 		/**
-		 * Returns the immutable timestamp marking
-		 * message creation.
-		 * 
+		 * Returns the immutable timestamp marking message creation.
+		 *
 		 * @return \DateTimeInterface
 		 */
 		public function getTimestamp() : \DateTimeInterface {
@@ -83,9 +81,8 @@
 		}
 
 		/**
-		 * Produces an array containing all data
-		 * within the Message object.
-		 * 
+		 * Produces an array containing all data within the Message object.
+		 *
 		 * @return string[]
 		 */
 		#[ArrayShape([
@@ -102,9 +99,8 @@
 		}
 
 		/**
-		 * Produces a JSON object containing all
-		 * data within the Message object.
-		 * 
+		 * Produces a JSON object containing all data within the Message object.
+		 *
 		 * @return string
 		 */
 		public function __toJson() : string {
@@ -112,8 +108,7 @@
 		}
 
 		/**
-		 * Returns an array of the message data ready to run through
-		 * json_encode().
+		 * Returns an array of the message data ready to run through json_encode().
 		 *
 		 * @return string[]
 		 */
@@ -131,9 +126,8 @@
 		}
 
 		/**
-		 * Produces a basic string containing all
-		 * data within the Message object.
-		 * 
+		 * Produces a basic string containing all data within the Message object.
+		 *
 		 * @return string
 		 */
 		public function __toString() : string {

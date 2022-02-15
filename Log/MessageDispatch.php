@@ -5,16 +5,15 @@
 	use Stoic\Chain\DispatchBase;
 
 	/**
-	 * Describes a collection of messages that
-	 * will be passed to log appenders.
-	 * 
+	 * Describes a collection of messages that will be passed to log appenders.
+	 *
 	 * @package Stoic\Log
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	class MessageDispatch extends DispatchBase {
 		/**
 		 * Collection of Message objects.
-		 * 
+		 *
 		 * @var Message[]
 		 */
 		public array $messages = [];

@@ -4,38 +4,39 @@
 
 	use Psr\Log\AbstractLogger;
 	use Psr\Log\LogLevel;
+
 	use Stoic\Chain\ChainHelper;
 
 	/**
-	 * PSR-3 compliant logging class which accepts
-	 * multiple appenders for output/handling.
-	 * 
+	 * PSR-3 compliant logging class which accepts multiple appenders for output/handling.
+	 *
 	 * @package Stoic\Log
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	class Logger extends AbstractLogger {
 		/**
 		 * Holds all assigned appenders.
-		 * 
+		 *
 		 * @var null|ChainHelper
 		 */
 		private ?ChainHelper $appenders = null;
 		/**
 		 * Holds all messages for appenders.
-		 * 
+		 *
 		 * @var Message[]
 		 */
 		private array $messages = [];
 		/**
 		 * The minimum log level to push to appenders.
-		 * 
+		 *
 		 * @var string
 		 */
 		private string $minLevel = LogLevel::DEBUG;
+
+
 		/**
-		 * Collection of log levels numerically indexed
-		 * to allow for minimum level comparison.
-		 * 
+		 * Collection of log levels numerically indexed to allow for minimum level comparison.
+		 *
 		 * @var string[]
 		 */
 		protected static array $levels = [
@@ -52,13 +53,10 @@
 
 		/**
 		 * Instantiates a new Logger object.
-		 * 
-		 * Creates a new Logger object.  Optionally
-		 * accepts an array of LogAppenderBase objects
-		 * to assign to appender stack.  Any objects in
-		 * array that don't implement LogAppenderBase
-		 * are simply ignored.
-		 * 
+		 *
+		 * Creates a new Logger object. Optionally accepts an array of LogAppenderBase objects to assign to appender stack.
+		 * Any objects in array that don't implement LogAppenderBase are simply ignored.
+		 *
 		 * @param null|string $minimumLevel Optional minimum log level for output; Default is LogLevel::DEBUG
 		 * @param null|AppenderBase[] $appenders Optional collection of LogAppenderBase objects to assign.
 		 */
@@ -86,9 +84,10 @@
 
 		/**
 		 * Adds a new appender to the appender stack.
-		 * 
+		 *
 		 * @param AppenderBase $appender Appender which extends the AppenderBase abstract class.
 		 * @throws \Psr\Log\InvalidArgumentException Thrown if invalid appender argument provided.
+		 * @return void
 		 */
 		public function addAppender(AppenderBase $appender) : void {
 			$this->appenders->linkNode($appender);
@@ -98,7 +97,7 @@
 
 		/**
 		 * Interpolates context values into message placeholders.
-		 * 
+		 *
 		 * @param string $message String value of log message w/ potential placeholders.
 		 * @param array $context Array of context values to interpolate with placeholers.
 		 * @return string
@@ -138,13 +137,13 @@
 
 		/**
 		 * Logs with an arbitrary level.
-		 * 
-		 * Generates a Stoic\LogMessage object for
-		 * the provided message
+		 *
+		 * Generates a Stoic\LogMessage object for the provided message
 		 *
 		 * @param string $level String value of log level for message.
 		 * @param string $message String value of log message.
 		 * @param array $context Optional context array for replacing placeholders in message string.
+		 * @return void
 		 */
 		public function log($level, $message, array $context = []) {
 			$this->messages[] = new Message($level, $this->interpolate($message, $context));
@@ -153,20 +152,17 @@
 		}
 
 		/**
-		 * Determines if the given log level meets the
-		 * configured minimum level.
-		 * 
+		 * Determines if the given log level meets the configured minimum level.
+		 *
 		 * @param string $level String value of level to check against minimum.
-		 * @return boolean
+		 * @return bool
 		 */
 		protected function meetsMinimumLevel(string $level) : bool {
 			return array_search($level, self::$levels) >= array_search($this->minLevel, self::$levels);
 		}
 
 		/**
-		 * Generates the level-filtered collection of
-		 * messages to output and traverses them through
-		 * the appender stack.
+		 * Generates the level-filtered collection of messages to output and traverses them through the appender stack.
 		 *
 		 * @throws \Exception
 		 * @return void

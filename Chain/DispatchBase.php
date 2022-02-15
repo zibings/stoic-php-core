@@ -3,29 +3,27 @@
 	namespace Stoic\Chain;
 
 	/**
-	 * Abstract class to provide contract
-	 * for all dispatches used with the
-	 * chain system.
-	 * 
+	 * Abstract class to provide contract for all dispatches used with the chain system.
+	 *
 	 * @package Stoic\Chain
 	 * @version 1.1.0
 	 */
 	abstract class DispatchBase {
 		/**
 		 * Whether the dispatch is 'consumable'.
-		 * 
+		 *
 		 * @var bool
 		 */
 		protected bool $_isConsumable = false;
 		/**
 		 * Whether the dispatch should retain results.
-		 * 
+		 *
 		 * @var bool
 		 */
 		protected bool $_isStateful = false;
 		/**
 		 * Whether the dispatch has been consumed by a node.
-		 * 
+		 *
 		 * @var bool
 		 */
 		protected bool $_isConsumed = false;
@@ -43,7 +41,7 @@
 		protected bool $_isValid = false;
 		/**
 		 * Date and time the dispatch was made valid.
-		 * 
+		 *
 		 * @var null|\DateTimeInterface
 		 */
 		private ?\DateTimeInterface $_calledDateTime = null;
@@ -66,7 +64,7 @@
 		/**
 		 * Marks the dispatch as having been consumed.  If the dispatch is not consumable or has already been marked as
 		 * consumed, returns false.  Otherwise, returns true.
-		 * 
+		 *
 		 * @return bool
 		 */
 		public function consume() : bool {
@@ -81,7 +79,7 @@
 
 		/**
 		 * Returns time the dispatch was marked valid.
-		 * 
+		 *
 		 * @return \DateTimeInterface
 		 */
 		public function getCalledDateTime() : \DateTimeInterface {
@@ -91,7 +89,7 @@
 		/**
 		 * Returns any results stored in dispatch.  If dispatch is stateful, this can be multiple results, otherwise it
 		 * will be null or a single result.
-		 * 
+		 *
 		 * @return mixed
 		 */
 		public function getResults() : mixed {
@@ -105,7 +103,7 @@
 		/**
 		 * Abstract method that handles initialization.  Should mark dispatch as valid if successful, otherwise dispatch
 		 * won't be usable with ChainHelper objects.
-		 * 
+		 *
 		 * @param mixed $input Initialization data for dispatch.
 		 */
 		abstract public function initialize(mixed $input);
@@ -113,7 +111,7 @@
 		/**
 		 * Returns whether dispatch can be marked as consumed.  If toggled and consumed, a ChainHelper will refuse to
 		 * further distribute the dispatch.
-		 * 
+		 *
 		 * @return bool
 		 */
 		public function isConsumable() : bool {
@@ -123,7 +121,7 @@
 		/**
 		 * Returns whether dispatch has been marked as consumed.  If consumed, a ChainHelper will refuse to further
 		 * distribute the dispatch.
-		 * 
+		 *
 		 * @return bool
 		 */
 		public function isConsumed() : bool {
@@ -132,7 +130,7 @@
 
 		/**
 		 * Returns whether dispatch will hold multiple results during processing.
-		 * 
+		 *
 		 * @return bool
 		 */
 		public function isStateful() : bool {
@@ -141,7 +139,7 @@
 
 		/**
 		 * Returns whether dispatch is considered valid for processing by nodes.
-		 * 
+		 *
 		 * @return bool
 		 */
 		public function isValid() : bool {
@@ -150,7 +148,7 @@
 
 		/**
 		 * Sets dispatch as consumable.
-		 * 
+		 *
 		 * @return DispatchBase
 		 */
 		protected function makeConsumable() : DispatchBase {
@@ -161,7 +159,7 @@
 
 		/**
 		 * Sets dispatch as stateful.
-		 * 
+		 *
 		 * @return DispatchBase
 		 */
 		protected function makeStateful() : DispatchBase {
@@ -185,7 +183,7 @@
 
 		/**
 		 * Returns number of results stored in dispatch.
-		 * 
+		 *
 		 * @return int
 		 */
 		public function numResults() : int {
@@ -195,7 +193,7 @@
 		/**
 		 * Sets a result in dispatch.  If dispatch is stateful result is added to array, otherwise it replaces any existing
 		 * results.
-		 * 
+		 *
 		 * @param mixed $result Result data to store in dispatch.
 		 * @return DispatchBase
 		 */

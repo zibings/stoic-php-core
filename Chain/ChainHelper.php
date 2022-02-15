@@ -2,6 +2,7 @@
 
 	namespace Stoic\Chain;
 
+	use JetBrains\PhpStorm\ArrayShape;
 	use JetBrains\PhpStorm\Pure;
 
 	/**
@@ -69,6 +70,10 @@
 		 * @return array
 		 */
 		#[Pure]
+		#[ArrayShape([[
+			"key"     => "string",
+		  "version" => "string"
+		]])]
 		public function getNodeList() : array {
 			$ret = [];
 

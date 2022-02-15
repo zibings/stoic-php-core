@@ -5,11 +5,10 @@
 	use JetBrains\PhpStorm\Pure;
 
 	/**
-	 * Abstract class to provide basic Enum type
-	 * functionality.
+	 * Abstract class to provide basic Enum type functionality.
 	 *
 	 * @package Stoic\Utilities
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	abstract class EnumBase implements \JsonSerializable {
 		/**
@@ -25,8 +24,7 @@
 		 */
 		protected ?int $value = null;
 		/**
-		 * Determines whether to serialize as the
-		 * name of the set value.
+		 * Determines whether to serialize as the name of the set value.
 		 *
 		 * @var bool
 		 */
@@ -42,11 +40,10 @@
 
 
 		/**
-		 * Static method to return a new Enum object using
-		 * the name instead of the value for initialization.
+		 * Static method to return a new Enum object using the name instead of the value for initialization.
 		 *
 		 * @param string $string String to use as name.
-		 * @param boolean $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @param bool $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
 		 * @throws \ReflectionException
 		 * @return static
 		 */
@@ -66,8 +63,7 @@
 		}
 
 		/**
-		 * Static method to return the const lookup for the
-		 * called class.
+		 * Static method to return the const lookup for the called class.
 		 *
 		 * @throws \ReflectionException
 		 * @return array[]
@@ -130,8 +126,8 @@
 		 * @param integer|static|null $value The value which may or may not be valid as an enum class/value.
 		 * @param string $className Fully qualified class name to return.
 		 * @param bool $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @throws \InvalidArgumentException|\ReflectionException
 		 * @return EnumBase
-		 *@throws \InvalidArgumentException|\ReflectionException
 		 */
 		public static function tryGetEnum(null|int|EnumBase $value, string $className, bool $serializeAsName = true) : EnumBase {
 			if (!is_a($className, EnumBase::class, true)) {
@@ -154,8 +150,7 @@
 		}
 
 		/**
-		 * Static method to validate a name against the Enum
-		 * object's possible constants.
+		 * Static method to validate a name against the Enum object's possible constants.
 		 *
 		 * @param string $name String to use as name.
 		 * @throws \ReflectionException
@@ -166,12 +161,11 @@
 		}
 
 		/**
-		 * Static method to validate a value against the Enum
-		 * object's possible constants.
+		 * Static method to validate a value against the Enum object's possible constants.
 		 *
-		 * @param integer $value Integer to use as value.
+		 * @param int $value Integer to use as value.
 		 * @throws \ReflectionException
-		 * @return boolean
+		 * @return bool
 		 */
 		public static function validValue(int $value) : bool {
 			return array_key_exists($value, static::getConstList()['value']) !== false;
@@ -181,8 +175,8 @@
 		/**
 		 * Instantiates a new Enum object.
 		 *
-		 * @param null|integer $value Integer to use as value, defaults to null.
-		 * @param boolean $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
+		 * @param null|int $value Integer to use as value, defaults to null.
+		 * @param bool $serializeAsName Causes object to serialize into the name of the set value, defaults to true.
 		 * @throws \ReflectionException
 		 */
 		public function __construct(?int $value = null, bool $serializeAsName = true) {
@@ -206,8 +200,7 @@
 		}
 
 		/**
-		 * Retrieves the string name of the currently
-		 * set value.
+		 * Retrieves the string name of the currently set value.
 		 *
 		 * @return null|string
 		 */
@@ -216,18 +209,16 @@
 		}
 
 		/**
-		 * Retrieves the integer representation of the
-		 * currently set value.
+		 * Retrieves the integer representation of the currently set value.
 		 *
-		 * @return null|integer
+		 * @return null|int
 		 */
 		public function getValue() : ?int {
 			return $this->value;
 		}
 
 		/**
-		 * Determines if the current set value is the same
-		 * as the given value.
+		 * Determines if the current set value is the same as the given value.
 		 *
 		 * @param int $value Integer to test against current value.
 		 * @return bool
@@ -241,8 +232,7 @@
 		}
 
 		/**
-		 * Determines if the current value is equal to any of the
-		 * supplied values.
+		 * Determines if the current value is equal to any of the supplied values.
 		 *
 		 * @param int[] $values Array of integer values to compare against current value.
 		 * @return bool
