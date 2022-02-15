@@ -70,6 +70,18 @@
 			$enum = EnumBase::tryGetEnum(null, AnotherEnum::class);
 			self::assertTrue($enum->getValue() === null);
 
+			$enum = AnotherEnum::tryGet(1);
+			self::assertTrue($enum->is(AnotherEnum::FIRST_VALUE));
+
+			$enum = AnotherEnum::tryGet(new AnotherEnum(1));
+			self::assertTrue($enum->is(AnotherEnum::FIRST_VALUE));
+
+			$enum = AnotherEnum::tryGet(35);
+			self::assertTrue($enum->getValue() === null);
+
+			$enum = AnotherEnum::tryGet(null);
+			self::assertTrue($enum->getValue() === null);
+
 			try {
 				$enum = EnumBase::tryGetEnum(1, NotAnEnum::class);
 				self::assertTrue(false);

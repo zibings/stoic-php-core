@@ -36,7 +36,7 @@
 			return;
 		}
 
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
 			if (!($dispatch instanceof IncrementDispatch)) {
 				return;
 			}
@@ -60,7 +60,7 @@
 			return;
 		}
 
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
 			$dispatch->consume();
 
 			return;
@@ -68,7 +68,7 @@
 	}
 
 	class InvalidChainHelperNode extends NodeBase {
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
 			return;
 		}
 	}

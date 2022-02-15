@@ -3,26 +3,24 @@
 	namespace Stoic\Chain;
 
 	/**
-	 * Abstract class to provide contract
-	 * for all nodes used with the chain
-	 * system.
-	 * 
+	 * Abstract class to provide contract for all nodes used with the chain system.
+	 *
 	 * @package Stoic\Chain
-	 * @version 1.0.1
+	 * @version 1.1.0
 	 */
 	abstract class NodeBase {
 		/**
 		 * Key that identifies the node.
-		 * 
-		 * @var string
+		 *
+		 * @var null|string
 		 */
-		protected $_key = null;
+		protected ?string $_key = null;
 		/**
-		 * Version number for the node.
-		 * 
-		 * @var string
+		 * Version for the node.
+		 *
+		 * @var null|string
 		 */
-		protected $_version = null;
+		protected ?string $_version = null;
 
 
 		/**
@@ -36,7 +34,7 @@
 
 		/**
 		 * Returns the node key value.
-		 * 
+		 *
 		 * @return string
 		 */
 		public function getKey() : string {
@@ -45,7 +43,7 @@
 
 		/**
 		 * Returns the node version value.
-		 * 
+		 *
 		 * @return string
 		 */
 		public function getVersion() : string {
@@ -53,29 +51,27 @@
 		}
 
 		/**
-		 * Returns whether or not the node is considered
-		 * valid.  By default this means that there are
-		 * non-empty values in both the 'key' and 'version'
-		 * fields of the node.
-		 * 
-		 * @return boolean
+		 * Returns whether the node is considered valid. This means that there are non-empty values in both the 'key' and
+		 * 'version' fields of the node by default.
+		 *
+		 * @return bool
 		 */
 		public function isValid() : bool {
 			return !empty($this->_key) && !empty($this->_version);
 		}
 
 		/**
-		 * Abstract method that handles processing of a
-		 * provided dispatch.
+		 * Abstract method that handles processing of a provided dispatch.
 		 * 
-		 * @param mixed        $sender Sender data, optional and thus can be 'null'.
+		 * @param mixed $sender Sender data, optional and thus can be 'null'.
 		 * @param DispatchBase $dispatch Dispatch object to process.
+		 * @return void
 		 */
-		abstract public function process($sender, DispatchBase &$dispatch);
+		abstract public function process(mixed $sender, DispatchBase &$dispatch) : void;
 
 		/**
 		 * Sets the node key value.
-		 * 
+		 *
 		 * @param string $key Value to use for node key.
 		 * @return NodeBase
 		 */
@@ -87,7 +83,7 @@
 
 		/**
 		 * Sets the node version value.
-		 * 
+		 *
 		 * @param string $version Value to use for node version.
 		 * @return NodeBase
 		 */
