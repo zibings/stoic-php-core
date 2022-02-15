@@ -39,7 +39,7 @@
 			return;
 		}
 
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process($sender, DispatchBase &$dispatch) : void {
 			return;
 		}
 	}
@@ -51,7 +51,7 @@
 			return;
 		}
 
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process($sender, DispatchBase &$dispatch) : void {
 			$dispatch->consume();
 
 			return;

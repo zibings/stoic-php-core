@@ -20,7 +20,7 @@
 			return;
 		}
 
-		public function process($sender, DispatchBase &$dispatch) {
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
 			$this->messages = array_merge($dispatch->messages, $this->messages);
 
 			return;

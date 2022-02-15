@@ -25,12 +25,14 @@
 			$this->_version = '1.0.0';
 		}
 
-		public function process($sender, DispatchBase &$Dispatch) {
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
+			return;
 		}
 	}
 
 	class InvalidNode extends NodeBase {
-		public function process($sender, DispatchBase &$Dispatch) {
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
+			return;
 		}
 	}
 
