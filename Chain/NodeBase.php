@@ -51,6 +51,23 @@
 		}
 
 		/**
+		 * Returns whether dispatch is an instance of any provided classes.
+		 *
+		 * @param DispatchBase $dispatch Dispatch object to check.
+		 * @param string ...$classes Classes to check against.
+		 * @return bool
+		 */
+		protected function isDispatchOfType(DispatchBase $dispatch, string ...$classes) : bool {
+			foreach ($classes as $class) {
+				if ($dispatch instanceof $class) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/**
 		 * Returns whether the node is considered valid. This means that there are non-empty values in both the 'key' and
 		 * 'version' fields of the node by default.
 		 *

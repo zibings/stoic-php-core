@@ -19,6 +19,12 @@
 		}
 	}
 
+	class ValidDispatch2 extends DispatchBase {
+		public function initialize($input) {
+			$this->makeValid();
+		}
+	}
+
 	class ValidNode extends NodeBase {
 		public function __construct() {
 			$this->_key     = 'ValidNode';
@@ -36,7 +42,46 @@
 		}
 	}
 
+	class DispatchTestNode extends NodeBase {
+		public function __construct() {
+			$this->setKey('DispatchTestNode')->setVersion('1.0.0');
+		}
+
+		public function process(mixed $sender, DispatchBase &$dispatch) : void {
+			return;
+		}
+
+		public function testDispatchGood(DispatchBase $dispatch) : bool {
+			return $this->isDispatchOfType($dispatch, ValidDispatch::class);
+		}
+
+		public function testMultipleDispatchGood(DispatchBase $dispatch) : bool {
+			return $this->isDispatchOfType($dispatch, ValidDispatch::class, ValidDispatch2::class);
+		}
+
+		public function testDispatchBad(DispatchBase $dispatch) : bool {
+			return $this->isDispatchOfType($dispatch, InvalidDispatch::class);
+		}
+
+		public function testDispatchBadMultiple(DispatchBase $dispatch) : bool {
+			return $this->isDispatchOfType($dispatch, InvalidDispatch::class, ValidDispatch2::class);
+		}
+	}
+
 	class DispatchTest extends TestCase {
+		public function test_dispatchBaseTypes() {
+			$validDispatch  = new ValidDispatch();
+			$validDispatch2 = new ValidDispatch2();
+			$dispatchTest   = new DispatchTestNode();
+
+			self::assertTrue($dispatchTest->testDispatchGood($validDispatch));
+			self::assertTrue($dispatchTest->testDispatchBadMultiple($validDispatch2));
+			self::assertFalse($dispatchTest->testDispatchBad($validDispatch));
+			self::assertFalse($dispatchTest->testDispatchBadMultiple($validDispatch));
+
+			return;
+		}
+
 		public function test_invalidNodeGetsRemoved() {
 			$chainHelper = new ChainHelper();
 			$chainHelper->linkNode(new InvalidNode())->linkNode(new ValidNode());
