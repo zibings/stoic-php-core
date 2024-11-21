@@ -163,11 +163,15 @@
 		/**
 		 * Static method to validate a value against the Enum object's possible constants.
 		 *
-		 * @param int $value Integer to use as value.
+		 * @param null|int $value Integer to use as value.
 		 * @throws \ReflectionException
 		 * @return bool
 		 */
-		public static function validValue(int $value) : bool {
+		public static function validValue(null|int $value) : bool {
+			if ($value === null) {
+				return false;
+			}
+
 			return array_key_exists($value, static::getConstList()['value']) !== false;
 		}
 
