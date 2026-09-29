@@ -29,8 +29,8 @@
 		protected int $_status;
 
 
-		const STATUS_BAD = 0;
-		const STATUS_GOOD = 1;
+		const int STATUS_BAD = 0;
+		const int STATUS_GOOD = 1;
 
 
 		/**
