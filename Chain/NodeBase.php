@@ -109,4 +109,15 @@
 
 			return $this;
 		}
+
+		/**
+		 * Method that handles reverting/unprocessing of a provided dispatch.
+		 *
+		 * @param mixed $sender Sender data, optional and thus can be 'null'.
+		 * @param DispatchBase $dispatch Dispatch object to revert/unprocess.
+		 * @return void
+		 */
+		public function unprocess(mixed $sender, DispatchBase &$dispatch) : void {
+			return;
+		}
 	}
