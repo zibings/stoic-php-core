@@ -16,6 +16,12 @@
 		 */
 		protected bool $_isConsumable = false;
 		/**
+		 * Whether the dispatch is 'failed'.
+		 *
+		 * @var bool
+		 */
+		protected bool $_isFailed = false;
+		/**
 		 * Whether the dispatch should retain results.
 		 *
 		 * @var bool
@@ -78,6 +84,21 @@
 		}
 
 		/**
+		 * Marks the dispatch as having failed.  If the dispatch is already marked as failed, returns false.
+		 *
+		 * @return bool
+		 */
+		public function fail() : bool {
+			if (!$this->_isFailed) {
+				$this->_isFailed = true;
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
 		 * Returns time the dispatch was marked valid.
 		 *
 		 * @return \DateTimeInterface
@@ -126,6 +147,15 @@
 		 */
 		public function isConsumed() : bool {
 			return $this->_isConsumed;
+		}
+
+		/**
+		 * Returns whether dispatch is marked as failed.
+		 *
+		 * @return bool
+		 */
+		public function isFailed() : bool {
+			return $this->_isFailed;
 		}
 
 		/**
