@@ -86,7 +86,11 @@
 						continue;
 					}
 
-					$this->addMessage($msg[0], $msg[1]);
+					if (!is_int($msg[1])) {
+						$this->addMessage($msg[0], $defaultWeight);
+					} else {
+						$this->addMessage($msg[0], $msg[1]);
+					}
 
 					continue;
 				}
@@ -168,10 +172,10 @@
 		 */
 		public function getMessages(bool $reversed = false) : array {
 			if ($reversed) {
-				return array_reverse(array_map($this->flattenMessage, $this->_messages));
+				return array_reverse(array_map($this->flattenMessage(...), $this->_messages));
 			}
 
-			return array_map($this->flattenMessage, $this->_messages);
+			return array_map($this->flattenMessage(...), $this->_messages);
 		}
 
 		/**
@@ -193,10 +197,10 @@
 			usort($messagesCopy, $cmpFunc);
 
 			if ($reversed) {
-				return array_reverse(array_map($this->flattenMessage, $messagesCopy));
+				return array_reverse(array_map($this->flattenMessage(...), $messagesCopy));
 			}
 
-			return array_map($this->flattenMessage, $messagesCopy);
+			return array_map($this->flattenMessage(...), $messagesCopy);
 		}
 
 		/**
