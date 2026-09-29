@@ -25,6 +25,12 @@
 		 */
 		protected bool $_isEvent = false;
 		/**
+		 * Whether instance reverts on failure.
+		 *
+		 * @var bool
+		 */
+		protected bool $_isRevertable = false;
+		/**
 		 * Whether instance should send debug messages.
 		 *
 		 * @var bool
@@ -60,6 +66,18 @@
 		 */
 		public function toggleDebug(bool $doDebug) : ChainHelper {
 			$this->_doDebug = $doDebug;
+
+			return $this;
+		}
+
+		/**
+		 * Toggles the 'revert' behavior on chain failure.
+		 *
+		 * @param bool $doRevert Toggle for reverting on failure.
+		 * @return ChainHelper
+		 */
+		public function toggleRevertable(bool $doRevert) : ChainHelper {
+			$this->_isRevertable = $doRevert;
 
 			return $this;
 		}
@@ -102,6 +120,15 @@
 		 */
 		public function isEvent() : bool {
 			return $this->_isEvent;
+		}
+
+		/**
+		 * Returns whether chain will revert on failure.
+		 *
+		 * @return bool
+		 */
+		public function isRevertable() : bool {
+			return $this->_isRevertable;
 		}
 
 		/**
@@ -182,6 +209,10 @@
 				}
 
 				$this->_nodes[0]->process($sender, $dispatch);
+
+				if ($this->_isRevertable && $dispatch->isFailed()) {
+					$this->_nodes[0]->unprocess($sender, $dispatch);
+				}
 			} else {
 				$len = count($this->_nodes);
 
@@ -191,6 +222,14 @@
 					}
 
 					$this->_nodes[$i]->process($sender, $dispatch);
+
+					if ($this->_isRevertable && $dispatch->isFailed()) {
+						for ($r = $i; $r > -1; $r--) {
+							$this->_nodes[$r]->unprocess($sender, $dispatch);
+						}
+
+						break;
+					}
 
 					if ($isConsumable && $dispatch->isConsumed()) {
 						if ($this->_doDebug) {
